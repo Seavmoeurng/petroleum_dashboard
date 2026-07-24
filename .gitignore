@@ -1,0 +1,15 @@
+# OS Generated Files
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Python Cache & Environment
+__pycache__/
+*.pyc
+.venv/
+env/
+
+# IDE & Editor Configs
+.vscode/
+.idea/
+.gemini/

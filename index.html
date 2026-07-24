@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Petroleum Dashboard - Global Policy, Fiscal & SPR Analytics</title>
+  <!-- Google Fonts: Outfit, Inter, JetBrains Mono & Kantumruy Pro (Khmer) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <div class="dashboard-app">
+    
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-header">
+      <div class="brand-box">
+        <div class="brand-icon">
+          <i class="fa-solid fa-oil-well"></i>
+        </div>
+        <div>
+          <div class="brand-name" id="uiBrandName">PETROLEUM <span class="brand-highlight" id="uiBrandHighlight">DASHBOARD</span></div>
+          <div class="brand-sub" id="uiBrandSub"><i class="fa-solid fa-globe"></i> Global Policy, Fiscal & SPR Analytics</div>
+        </div>
+      </div>
+
+      <!-- Quick Country Selector Pills & Dropdown + Theme Switcher + Language Switcher + Print A4 -->
+      <div class="country-nav">
+        <!-- Language Switcher Toggle Button -->
+        <button id="langToggleBtn" class="lang-toggle-btn" title="Toggle Language (English / Khmer)">
+          <i class="fa-solid fa-language"></i>
+          <span id="langLabel">ភាសាខ្មែរ</span>
+        </button>
+
+        <!-- Print / Export Landscape A4 Button -->
+        <button id="printA4Btn" class="print-a4-btn" title="Export / Print Landscape A4 Page">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span id="uiExportA4">Export A4</span>
+        </button>
+
+        <!-- Theme Switcher Toggle Button -->
+        <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Light / Dark Theme">
+          <i class="fa-solid fa-sun" id="themeIcon"></i>
+          <span id="themeLabel">Light Mode</span>
+        </button>
+
+        <select id="countrySelectDropdown" class="country-select-dropdown">
+          <option value="GLOBAL" id="optGlobal">🌐 All Countries (Global Overview)</option>
+          <option value="venezuela">🇻🇪 Venezuela (Rank #1)</option>
+          <option value="saudi-arabia">🇸🇦 Saudi Arabia (Rank #2)</option>
+          <option value="iran">🇮🇷 Iran (Rank #3)</option>
+          <option value="canada">🇨🇦 Canada (Rank #4)</option>
+          <option value="iraq">🇮🇶 Iraq (Rank #5)</option>
+          <option value="united-arab-emirates">🇦🇪 UAE (Rank #6)</option>
+          <option value="kuwait">🇰🇼 Kuwait (Rank #7)</option>
+          <option value="russia">🇷🇺 Russia (Rank #8)</option>
+          <option value="united-states">🇺🇸 United States (Rank #11)</option>
+          <option value="china">🇨🇳 China (Rank #13)</option>
+          <option value="brazil">🇧🇷 Brazil (Rank #15)</option>
+        </select>
+
+        <!-- Search Box -->
+        <div class="header-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="Search KPI, tax, NOC...">
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN DASHBOARD WEB VIEW -->
+    <main class="dashboard-viewport">
+
+      <!-- DYNAMIC BANNER TABS -->
+      <div class="view-banner" id="viewBanner">
+        <div class="banner-left">
+          <div class="banner-title" id="bannerTitle"><i class="fa-solid fa-chart-line text-cyan"></i> Global Petroleum Executive Overview</div>
+          <div class="banner-subtitle" id="bannerSubtitle">Comparing 11 Benchmark Nations | Total Proven Crude: ~1.77 Trillion Barrels</div>
+        </div>
+        <div class="banner-badges" id="bannerBadges">
+          <span class="kpi-pill pill-cyan" id="badge11"><i class="fa-solid fa-earth-americas"></i> 11 Benchmark Nations</span>
+          <span class="kpi-pill pill-purple" id="badgeTaxonomy"><i class="fa-solid fa-layer-group"></i> Policy Taxonomy</span>
+          <span class="kpi-pill pill-green" id="badgeFiscal"><i class="fa-solid fa-sack-dollar"></i> Fiscal Rent Benchmark</span>
+        </div>
+      </div>
+
+      <!-- ROW 1: 4 AT-A-GLANCE KPI CARDS -->
+      <div class="kpi-cards-grid" id="kpiCardsGrid">
+        
+        <div class="kpi-card card-cyan">
+          <div class="kpi-header">
+            <span class="kpi-title" id="uiKpiReservesTitle"><i class="fa-solid fa-drum text-cyan"></i> PROVEN OIL RESERVES</span>
+            <div class="kpi-icon"><i class="fa-solid fa-barrel-oil"></i></div>
+          </div>
+          <div class="kpi-value" id="kpiValReserves">~1.77 T bbls</div>
+          <div class="kpi-foot" id="kpiFootReserves"><i class="fa-solid fa-chart-simple"></i> Global Dataset Total (Rank #1 to #15)</div>
+        </div>
+
+        <div class="kpi-card card-purple">
+          <div class="kpi-header">
+            <span class="kpi-title" id="uiKpiOwnershipTitle"><i class="fa-solid fa-building-flag text-purple"></i> OWNERSHIP & NOC MODEL</span>
+            <div class="kpi-icon"><i class="fa-solid fa-landmark"></i></div>
+          </div>
+          <div class="kpi-value" id="kpiValOwnership">State Monopoly</div>
+          <div class="kpi-foot" id="kpiFootOwnership"><i class="fa-solid fa-shield-halved"></i> 9 of 11 Nations State/Crown Owned</div>
+        </div>
+
+        <div class="kpi-card card-green">
+          <div class="kpi-header">
+            <span class="kpi-title" id="uiKpiFiscalTitle"><i class="fa-solid fa-hand-holding-dollar text-green"></i> PRIMARY FISCAL RENT</span>
+            <div class="kpi-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+          </div>
+          <div class="kpi-value" id="kpiValFiscal">15% - 45% Royalty</div>
+          <div class="kpi-foot" id="kpiFootFiscal"><i class="fa-solid fa-percent"></i> CIT: 15% to 85% Across Value Chain</div>
+        </div>
+
+        <div class="kpi-card card-amber">
+          <div class="kpi-header">
+            <span class="kpi-title" id="uiKpiSprTitle"><i class="fa-solid fa-vault text-amber"></i> STRATEGIC STORAGE (SPR)</span>
+            <div class="kpi-icon"><i class="fa-solid fa-warehouse"></i></div>
+          </div>
+          <div class="kpi-value" id="kpiValSpr">~1.4B bbls SPR</div>
+          <div class="kpi-foot" id="kpiFootSpr"><i class="fa-solid fa-boxes-stacked"></i> China ~1.4B | USA ~415M bbls Salt Caverns</div>
+        </div>
+
+      </div>
+
+      <!-- ROW 2: MAIN VISUAL CHART + CORE UPSTREAM KPI SUMMARY -->
+      <div class="main-content-grid">
+
+        <!-- LEFT: PROVEN RESERVES BAR CHART HERO -->
+        <div class="content-card hero-chart-card chart-card-compact">
+          <div class="card-head">
+            <div class="card-head-title" id="uiChartTitle"><i class="fa-solid fa-chart-column text-cyan"></i> Proven Crude Oil Reserve Ranking</div>
+            <div class="card-head-sub" id="uiChartSub"><i class="fa-solid fa-scale-balanced"></i> Reserves in Billion Barrels (bbls)</div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartReservesRanking"></canvas>
+          </div>
+        </div>
+
+        <!-- RIGHT: UPSTREAM POLICY & NOC KPI SUMMARY -->
+        <div class="content-card core-summary-card">
+          <div class="card-head">
+            <div class="card-head-title" id="uiUpstreamTitle"><i class="fa-solid fa-compass-drafting text-purple"></i> Upstream Policy & NOC Strategy</div>
+            <div class="card-head-sub" id="uiUpstreamSub"><i class="fa-solid fa-sliders"></i> Licensing, State Rights & Reservoir Rules</div>
+          </div>
+          <div class="kpi-summary-list" id="upstreamKpiList">
+            <!-- Dynamically Populated -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ROW 3: DOWNSTREAM, FISCAL REGIME & CAMBODIA SPOTLIGHT -->
+      <div class="bottom-cards-grid">
+
+        <!-- CARD A: DOWNSTREAM & PRICE REGULATION -->
+        <div class="content-card">
+          <div class="card-head">
+            <div class="card-head-title" id="uiDownstreamTitle"><i class="fa-solid fa-gas-pump text-green"></i> Downstream & Price Policy</div>
+          </div>
+          <div class="kpi-summary-list" id="downstreamKpiList">
+            <!-- Dynamically Populated -->
+          </div>
+        </div>
+
+        <!-- CARD B: TAX (FISCAL REGIME & STATE TAKE) -->
+        <div class="content-card">
+          <div class="card-head">
+            <div class="card-head-title" id="uiFiscalTitle"><i class="fa-solid fa-coins text-amber"></i> Tax Architecture & Real Take</div>
+          </div>
+          <div class="kpi-summary-list" id="fiscalKpiList">
+            <!-- Dynamically Populated -->
+          </div>
+        </div>
+
+        <!-- CARD C: RISK & CAMBODIA STRATEGIC LESSON -->
+        <div class="content-card spotlight-card">
+          <div class="card-head">
+            <div class="card-head-title" id="uiRiskTitle"><i class="fa-solid fa-shield-halved text-cyan"></i> Risk & Cambodia Strategic Takeaway</div>
+          </div>
+          <div class="kpi-summary-list" id="riskKpiList">
+            <!-- Dynamically Populated -->
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Main JavaScript Application Logic -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
