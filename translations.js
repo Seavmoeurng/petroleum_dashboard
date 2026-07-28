@@ -5,14 +5,14 @@ export const translations = {
     brandName: 'PETROLEUM',
     brandHighlight: 'DASHBOARD',
     brandSub: 'Global Policy, Fiscal & SPR Analytics',
-    
+
     // Header controls
     exportA4: 'Export A4',
     lightMode: 'Light Mode',
     darkMode: 'Dark Mode',
     langLabel: 'ភាសាខ្មែរ',
     searchPlaceholder: 'Search KPI, tax, NOC...',
-    
+
     // View Tabs
     tabOverview: '🌐 Executive Overview',
     tabCountry: '🏳️ Country Deep-Dive',
@@ -52,7 +52,7 @@ export const translations = {
     // Section Titles
     chartTitle: 'Proven Crude Oil Reserve Ranking',
     chartSub: 'Reserves in Billion Barrels (bbls)',
-    
+
     upstreamTitle: 'Upstream Policy & NOC Strategy',
     upstreamSub: 'Licensing, State Rights & Reservoir Rules',
 
@@ -133,15 +133,15 @@ export const translations = {
   km: {
     brandName: 'ផ្ទាំងព័ត៌មាន',
     brandHighlight: 'ប្រេងកាត',
-    brandSub: 'ការវិភាគគោលនយោបាយ សារពើពន្ធ និងបម្រុងប្រេងពិភពលោក',
-    
+    brandSub: 'ការវិភាគគោលនយោបាយ សារពើពន្ធ និងសន្និធិប្រេងបម្រុងយុទ្ធសាស្ត្រ',
+
     // Header controls
     exportA4: 'ទាញយក A4 PDF',
-    lightMode: 'ពន្លឺ',
-    darkMode: 'ងងឹត',
+    lightMode: 'របៀបពន្លឺ',
+    darkMode: 'របៀបងងឹត',
     langLabel: 'English',
     searchPlaceholder: 'ស្វែងរក KPI, ពន្ធ, ក្រុមហ៊ុនប្រេងជាតិ...',
-    
+
     // View Tabs
     tabOverview: '🌐 ទិដ្ឋភាពទូទៅសកល',
     tabCountry: '🏳️ ប្រវត្តិសង្ខេបតាមប្រទេស',
@@ -154,10 +154,10 @@ export const translations = {
 
     // Banner
     globalBannerTitle: 'ទិដ្ឋភាពទូទៅនៃប្រតិបត្តិការប្រេងកាតពិភពលោក',
-    globalBannerSub: 'ការប្រៀបធៀប ១១ ប្រទេសគំរូ | បម្រុងប្រេងកាតសរុប: ~១.៧៧ ត្រីលានបារ៉ែល',
+    globalBannerSub: 'ការប្រៀបធៀប ១១ ប្រទេសគំរូ | បម្រុងប្រេងកាតសរុប: ~១.៧៧ ទ្រីលានបារ៉ែល',
     badge11Nations: '១១ ប្រទេសគំរូ',
     badgeTaxonomy: 'ចំណាត់ថ្នាក់គោលនយោបាយ',
-    badgeFiscal: 'កម្រិតសារពើពន្ធ',
+    badgeFiscal: 'បារ៉ូម៉ែត្រសារពើពន្ធ',
     profileTitleSuffix: '- ប្រវត្តិសង្ខេបប្រេងកាត',
     provenRankPrefix: 'ចំណាត់ថ្នាក់បម្រុងប្រេង #',
     tradeStatusLabel: 'ស្ថានភាពពាណិជ្ជកម្ម: ',
@@ -171,17 +171,17 @@ export const translations = {
     kpiOwnershipFootGlobal: '៩ ក្នុងចំណោម ១១ ប្រទេសជាកម្មសិទ្ធិរដ្ឋ',
 
     kpiFiscalTitle: 'ប្រាក់ចំណូលសារពើពន្ធចម្បង',
-    kpiFiscalValGlobal: 'Royalty ១៥% - ៤៥%',
+    kpiFiscalValGlobal: 'ពន្ធសួយសារអាករ ១៥% - ៤៥%',
     kpiFiscalFootGlobal: 'ពន្ធលើប្រាក់ចំណេញ: ១៥% ដល់ ៨៥%',
 
-    kpiSprTitle: 'ការស្តុកទុករក្សាសុវត្ថិភាព (SPR)',
-    kpiSprValGlobal: 'SPR ~១.៤B បារ៉ែល',
-    kpiSprFootGlobal: 'ចិន ~១.៤B | អាមេរិក ~៤១៥M បារ៉ែល (ក្នុងរូងអំបិល)',
+    kpiSprTitle: 'សន្និធិប្រេងបម្រុងយុទ្ធសាស្ត្រ (SPR)',
+    kpiSprValGlobal: 'SPR ~១,៤ ពាន់លានបារ៉ែល',
+    kpiSprFootGlobal: 'ចិន ~១,៤ ពាន់លាន | អាមេរិក ~៤១៥ លានបារ៉ែល (ក្នុងរូងអំបិល)',
 
     // Section Titles
     chartTitle: 'ចំណាត់ថ្នាក់បម្រុងប្រេងកាតពិភពលោក',
-    chartSub: 'បម្រុងប្រេងគិតជា ពានលានបារ៉ែល',
-    
+    chartSub: 'បម្រុងប្រេងគិតជា ពាន់លានបារ៉ែល',
+
     upstreamTitle: 'គោលនយោបាយផ្នែកដើម (Upstream) & យុទ្ធសាស្ត្រ NOC',
     upstreamSub: 'អាជ្ញាប័ណ្ណ សិទ្ធិរដ្ឋ និង ការគ្រប់គ្រងអណ្តូងប្រេង',
 
@@ -190,22 +190,22 @@ export const translations = {
     riskTitle: 'ហានិភ័យ និង មេរៀនយុទ្ធសាស្ត្រសម្រាប់កម្ពុជា',
 
     // Upstream Labels
-    labelLicensing: 'គំរូអាជ្ញាប័ណ្ណ និងការដេញថ្លៃដី',
+    labelLicensing: 'គំរូអាជ្ញាប័ណ្ណ និងការដេញថ្លៃសម្បទាន',
     labelNoc: 'តួនាទីក្រុមហ៊ុនប្រេងជាតិ (NOC)',
     labelConservation: 'ការអភិរក្ស និងគ្រប់គ្រងអណ្តូងប្រេង',
 
     // Upstream Global Content
-    valLicensingGlobal: 'ការដេញថ្លៃដី (អាមេរិក, កាណាដា), កិច្ចសន្យាចែករំលែកផលិតផល PSC (ចិន, ប្រេស៊ីល), កិច្ចសន្យាសេវាកម្ម TSA (កwait, អ៊ីរ៉ាក់, អ៊ីរ៉ង់), ការក្តាប់ដាច់មុខដោយរដ្ឋ (អារ៉ាប៊ីសាអ៊ូឌីត)។',
+    valLicensingGlobal: 'ការដេញថ្លៃដី (អាមេរិក, កាណាដា), កិច្ចសន្យាចែករំលែកផលិតផល PSC (ចិន, ប្រេស៊ីល), កិច្ចសន្យាសេវាកម្ម TSA (គុយវ៉ែត, អ៊ីរ៉ាក់, អ៊ីរ៉ង់), ការក្តាប់ដាច់មុខដោយរដ្ឋ (អារ៉ាប៊ីសាអ៊ូឌីត)។',
     valNocGlobal: 'ការក្តាប់ដាច់មុខទាំងស្រុង (Aramco, KPC, NIOC) vs ដៃគូសហការ ៦០% (ADNOC, PDVSA) vs ក្រុមហ៊ុនឯកជន IOC (អាមេរិក, កាណាដា)។',
     valConservationGlobal: 'ការកំណត់សមត្ថភាពផលិតកម្មអតិបរមា MSC (អារ៉ាប៊ីសាអ៊ូឌីត), បម្រាមដុតឧស្ម័នចោល zero flaring (UAE, អាមេរិក), និងបច្ចេកវិទ្យា EOR (ចិន)។',
 
     // Downstream Labels & Content
-    labelRefining: 'ហេដ្ឋារចនាសម្ព័ន្ធចម្រាញ់ និងបំពង់ទុយោ',
+    labelRefining: 'ហេដ្ឋារចនាសម្ព័ន្ធចម្រាញ់ និងបំពង់ដឹកជញ្ជូន',
     labelPricing: 'យន្តការកំណត់តម្លៃលក់រាយប្រេង',
     labelFuel: 'បទដ្ឋានគុណភាពប្រេង និងបរិស្ថាន',
 
-    valRefiningGlobal: 'មជ្ឈមណ្ឌលចម្រាញ់ធំៗ (អាមេរិក, ចិន, UAE Ruwais, កwait Al-Zour) & បំពង់វាងផ្លូវសមុទ្រ (Saudi East-West, UAE ADCOP, Canada TMX)។',
-    valPricingGlobal: 'ទីផ្សារសេរី (អាមេរិក, កាណាដា), រូបមន្តកែសម្រួលប្រចាំខែ (UAE), ពិដានតម្លៃ ១០ថ្ងៃ (ចិន), យន្តការទប់ស្កាត់រោងចក្រ (រុស្ស៊ី), ការឧបត្ថម្ភធន (កwait, អ៊ីរ៉ង់, អ៊ីរ៉ាក់, វេណេស៊ុយអេឡា)។',
+    valRefiningGlobal: 'មជ្ឈមណ្ឌលចម្រាញ់ធំៗ (អាមេរិក, ចិន, UAE Ruwais, គុយវ៉ែត Al-Zour) & បំពង់វាងផ្លូវសមុទ្រ (Saudi East-West, UAE ADCOP, Canada TMX)។',
+    valPricingGlobal: 'ទីផ្សារសេរី (អាមេរិក, កាណាដា), រូបមន្តកែសម្រួលប្រចាំខែ (UAE), ពិដានតម្លៃ ១០ថ្ងៃ (ចិន), យន្តការទប់ស្កាត់រោងចក្រ (រុស្ស៊ី), ការឧបត្ថម្ភធន (គុយវ៉ែត, អ៊ីរ៉ង់, អ៊ីរ៉ាក់, វេណេស៊ុយអេឡា)។',
     valFuelGlobal: 'ស្តង់ដារកាត់បន្ថយស្ពាន់ធ័រ Euro V / Euro 6, បទដ្ឋាន EPA Tier 3, និងការប្រកាសកាតព្វកិច្ចជីវឥន្ធនៈ RenovaBio (E30/B14) នៅប្រេស៊ីល។',
 
     // Fiscal Labels & Content
@@ -213,14 +213,14 @@ export const translations = {
     labelStateTake: 'ចំណូលរដ្ឋប្រមូលបាន (នៅតម្លៃ $៨៣/បារ៉ែល)',
     labelCostRecovery: 'ការបង្វិលដើមទុន និងការលើកទឹកចិត្ត',
 
-    valRoyaltiesGlobal: '០% (រុស្ស៊ី, ចិន, កwait, អ៊ីរ៉ង់, អ៊ីរ៉ាក់) ដល់ ៤៥% តាមតម្លៃប្រេង Brent (អារ៉ាប៊ីសាអ៊ូឌីត) & ១-៤០% តាមដំណាក់កាលដើមទុន (កាណាដា)។',
-    valStateTakeGlobal: 'អ៊ីរ៉ាក់ (>៩៥% TSC), កwait (១០០% TSA), អ៊ីរ៉ង់ (>៩០% IPC), អារ៉ាប៊ីសាអ៊ូឌីត (៥៧%), UAE (៦៧%), ប្រេស៊ីល (៦៥-៧០%), អាមេរិក (~៣០%)។',
+    valRoyaltiesGlobal: '០% (រុស្ស៊ី, ចិន, គុយវ៉ែត, អ៊ីរ៉ង់, អ៊ីរ៉ាក់) ដល់ ៤៥% តាមតម្លៃប្រេង Brent (អារ៉ាប៊ីសាអ៊ូឌីត) & ១-៤០% តាមដំណាក់កាលដើមទុន (កាណាដា)។',
+    valStateTakeGlobal: 'អ៊ីរ៉ាក់ (>៩៥% TSC), គុយវ៉ែត (១០០% TSA), អ៊ីរ៉ង់ (>៩០% IPC), អារ៉ាប៊ីសាអ៊ូឌីត (៥៧%), UAE (៦៧%), ប្រេស៊ីល (៦៥-៧០%), អាមេរិក (~៣០%)។',
     valCostRecoveryGlobal: 'ការកាត់កងថ្លៃខួង IDC (អាមេរិក), សួយសារអាករទាបនៅដំណាក់កាលដំបូង (កាណាដា), ពិដាន Cost Oil (ចិន, ប្រេស៊ីល Pre-Salt)។',
 
     // Risk Labels & Content
     labelHse: 'បទដ្ឋានសុវត្ថិភាព HSE & បរិស្ថាន',
     labelStabilization: 'ការរក្សាស្ថិរភាពចំណូលរដ្ឋ',
-    labelCambodia: 'មេរៀនសន្លឹះសម្រាប់ប្រទេសកម្ពុជា',
+    labelCambodia: 'មេរៀនគន្លឹះសម្រាប់ប្រទេសកម្ពុជា',
 
     valHseGlobal: 'ការត្រួតពិនិត្យ BSEE (អាមេរិក), អាជ្ញាប័ណ្ណ IBAMA (ប្រេស៊ីល), Rostekhnadzor (រុស្ស៊ី), គោលដៅ zero flaring របស់ Aramco។',
     valStabilizationGlobal: 'មូលនិធិវិនិយោគរដ្ឋ Sovereign Wealth Funds (Kuwait KIA, Abu Dhabi ADIA, Alberta Heritage Fund) & ការការពារកូតា OPEC+។',
@@ -230,7 +230,7 @@ export const translations = {
     labelExploration: 'ការរុករក និងអាជ្ញាប័ណ្ណ',
     labelRoleNoc: 'តួនាទីក្រុមហ៊ុនប្រេងជាតិ (NOC)',
     labelReservoir: 'ការគ្រប់គ្រងអណ្តូងប្រេង',
-    labelRefiningPipeline: 'ហេដ្ឋារចនាសម្ព័ន្ធចម្រាញ់ និងបំពង់ទុយោ',
+    labelRefiningPipeline: 'ហេដ្ឋារចនាសម្ព័ន្ធចម្រាញ់ និងបំពង់ដឹកជញ្ជូន',
     labelRetailPricing: 'តម្លៃលក់រាយ និងការឧបត្ថម្ភធន',
     labelFuelQuality: 'ស្តង់ដារគុណភាពប្រេង',
     labelStatutoryRoyalties: 'ពន្ធសួយសារអាករតាមច្បាប់',

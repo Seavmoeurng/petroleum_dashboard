@@ -97,20 +97,19 @@ body {
   background: var(--accent-cyan);
 }
 
-/* Master App Layout - Fits Entirely on One Page */
+/* Master App Layout - Fits Entirely on One Page, but can scroll if needed */
+html {
+  font-size: 105%; /* Make all text slightly larger */
+}
 html, body {
-  height: 100vh;
-  max-height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
 }
 
 .dashboard-app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  max-height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  overflow: hidden;
 }
 
 /* Top Navigation Bar */
@@ -280,9 +279,7 @@ html, body {
   display: flex;
   flex: 1;
   width: 100vw;
-  height: calc(100vh - 46px);
-  max-height: calc(100vh - 46px);
-  overflow: hidden;
+  min-height: calc(100vh - 46px);
 }
 
 /* Country Navigation Sidebar (Left Filter Panel) */
@@ -446,7 +443,8 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 100%;
 }
 
@@ -754,7 +752,7 @@ html, body {
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
   flex: 1.1;
-  min-height: 0;
+  min-height: 380px; /* Increased to fix small charts */
 }
 
 .content-card {
@@ -811,10 +809,8 @@ html, body {
 .chart-container {
   position: relative;
   width: 100%;
-  height: 135px;
-  max-height: 135px;
+  min-height: 280px; 
   flex: 1;
-  min-height: 0;
 }
 
 /* Row 3: Upstream Policy & Emergency Shock Simulator Grid (Side-by-Side) */
@@ -823,7 +819,7 @@ html, body {
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
   flex: 1.25;
-  min-height: 0;
+  min-height: 250px;
 }
 
 /* Scannable KPI Bullet Summary Lists */
@@ -1121,3 +1117,126 @@ html, body {
   }
 }
 
+/* NEW 4-ROW SINGLE PAGE LAYOUT CSS */
+
+.dashboard-content-scroll {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 0.25rem;
+}
+
+.exporters-badges-wrapper {
+  margin-top: 0.25rem;
+  padding: 0 0.5rem;
+}
+.exporters-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+.exporters-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+.badge-exporter {
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.2rem 0.4rem;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.chart-card-autonomy .chart-container {
+  height: 180px;
+}
+
+.simulator-spotlight-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.simulator-head {
+  background: var(--bg-card-hover);
+  border-bottom: 1px solid var(--border-card);
+  padding: 0.5rem 0.75rem;
+  margin: -0.4rem -0.65rem 0.65rem -0.65rem;
+}
+
+.scenario-toggle-group {
+  display: flex;
+  background: var(--bg-sub);
+  border-radius: 20px;
+  padding: 3px;
+  gap: 2px;
+  margin-bottom: 0.65rem;
+  border: 1px solid var(--border-card);
+}
+.scenario-toggle-btn {
+  flex: 1;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.4rem;
+  border-radius: 18px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+}
+.scenario-toggle-btn input[type="radio"] {
+  display: none;
+}
+.scenario-toggle-btn.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.scenario-toggle-btn:hover:not(.active) {
+  background: var(--bg-card-hover);
+}
+
+.policy-taxonomy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.card-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-card);
+  padding-bottom: 0.25rem;
+}
+.card-tab-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  transition: var(--transition-fast);
+}
+.card-tab-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-sub);
+}
+.card-tab-btn.active {
+  color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.1);
+}
