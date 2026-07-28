@@ -392,10 +392,10 @@ function renderChart() {
           if (!text) return;
 
           ctx.fillStyle = isLight ? '#0F172A' : '#38BDF8';
-          ctx.font = `${isSingle ? '700 13px' : '600 10px'} ${state.lang === 'km' ? 'Kantumruy Pro' : 'Inter'}, sans-serif`;
+          ctx.font = `${isSingle ? '700 11px' : '600 8.5px'} ${state.lang === 'km' ? 'Kantumruy Pro' : 'Inter'}, sans-serif`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
-          ctx.fillText(text, bar.x, bar.y - 4);
+          ctx.fillText(text, bar.x, bar.y - 2);
         });
       });
       ctx.restore();
@@ -410,8 +410,8 @@ function renderChart() {
         label: state.lang === 'km' ? `បម្រុងប្រេងកាត (${unitText})` : `Proven Crude Oil Reserves (${unitText})`,
         data: dataValues,
         backgroundColor: barDefault,
-        borderRadius: 6,
-        maxBarThickness: isSingle ? 80 : 22,
+        borderRadius: 4,
+        maxBarThickness: isSingle ? 50 : 16,
         categoryPercentage: isSingle ? 0.4 : 0.7,
         barPercentage: isSingle ? 0.5 : 0.8
       }]
@@ -420,6 +420,9 @@ function renderChart() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      layout: {
+        padding: { top: 12, bottom: 0, left: 0, right: 0 }
+      },
       plugins: {
         legend: { display: false },
         tooltip: {
@@ -433,13 +436,13 @@ function renderChart() {
       },
       scales: {
         x: {
-          ticks: { color: textColor, font: { size: isSingle ? 12 : 10, weight: '700', family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          ticks: { color: textColor, font: { size: isSingle ? 10 : 8.5, weight: '700', family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
           grid: { display: false }
         },
         y: {
-          ticks: { color: textColor, font: { family: 'Inter' } },
+          ticks: { color: textColor, font: { size: 8.5, family: 'Inter' } },
           grid: { color: gridColor },
-          title: { display: true, text: unitText, color: textColor, font: { size: 10, family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          title: { display: true, text: unitText, color: textColor, font: { size: 8.5, family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
           max: isSingle ? Math.ceil(dataValues[0] * 1.35) : undefined
         }
       }
@@ -490,10 +493,10 @@ function renderEmergencySurvivalChart() {
           if (!text) return;
 
           ctx.fillStyle = isLight ? '#D97706' : '#FBBF24';
-          ctx.font = `${isSingle ? '700 13px' : '600 10px'} ${state.lang === 'km' ? 'Kantumruy Pro' : 'Inter'}, sans-serif`;
+          ctx.font = `${isSingle ? '700 11px' : '600 8.5px'} ${state.lang === 'km' ? 'Kantumruy Pro' : 'Inter'}, sans-serif`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
-          ctx.fillText(text, bar.x, bar.y - 4);
+          ctx.fillText(text, bar.x, bar.y - 2);
         });
       });
       ctx.restore();
@@ -509,8 +512,8 @@ function renderEmergencySurvivalChart() {
           label: state.lang === 'km' ? 'ថិរវេលាទ្រទ្រង់ប្រេង (ចំនួនថ្ងៃ)' : 'Fuel Autonomy Duration (Days)',
           data: dataValues,
           backgroundColor: barDefault,
-          borderRadius: 6,
-          maxBarThickness: isSingle ? 80 : 22,
+          borderRadius: 4,
+          maxBarThickness: isSingle ? 50 : 16,
           categoryPercentage: isSingle ? 0.4 : 0.7,
           barPercentage: isSingle ? 0.5 : 0.8
         }
@@ -520,6 +523,9 @@ function renderEmergencySurvivalChart() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      layout: {
+        padding: { top: 12, bottom: 0, left: 0, right: 0 }
+      },
       plugins: {
         legend: { display: false },
         tooltip: {
@@ -537,13 +543,13 @@ function renderEmergencySurvivalChart() {
       },
       scales: {
         x: {
-          ticks: { color: textColor, font: { size: isSingle ? 12 : 10, weight: '700', family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          ticks: { color: textColor, font: { size: isSingle ? 10 : 8.5, weight: '700', family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
           grid: { display: false }
         },
         y: {
-          ticks: { color: textColor, font: { family: 'Inter' } },
+          ticks: { color: textColor, font: { size: 8.5, family: 'Inter' } },
           grid: { color: gridColor },
-          title: { display: true, text: state.lang === 'km' ? 'ចំនួនថ្ងៃ (Days)' : 'Days of Autonomy', color: textColor, font: { size: 10, family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          title: { display: true, text: state.lang === 'km' ? 'ចំនួនថ្ងៃ (Days)' : 'Days of Autonomy', color: textColor, font: { size: 8.5, family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
           max: isSingle ? Math.ceil(dataValues[0] * 1.35) : 200
         }
       }
