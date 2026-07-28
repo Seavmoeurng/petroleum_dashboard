@@ -135,11 +135,11 @@
 
       </div>
 
-      <!-- ROW 2: MAIN VISUAL CHART + CORE UPSTREAM KPI SUMMARY -->
-      <div class="main-content-grid">
+      <!-- ROW 2: BOTH VISUAL BENCHMARK CHARTS SIDE-BY-SIDE -->
+      <div class="charts-row-grid">
 
         <!-- LEFT: PROVEN RESERVES BAR CHART HERO -->
-        <div class="content-card hero-chart-card chart-card-compact">
+        <div class="content-card hero-chart-card">
           <div class="card-head">
             <div class="card-head-title" id="uiChartTitle"><i class="fa-solid fa-chart-column text-cyan"></i> Proven Crude Oil Reserve Ranking</div>
             <div class="card-head-sub" id="uiChartSub"><i class="fa-solid fa-scale-balanced"></i> Reserves in Billion Barrels (bbls)</div>
@@ -149,7 +149,23 @@
           </div>
         </div>
 
-        <!-- RIGHT: UPSTREAM POLICY & NOC KPI SUMMARY -->
+        <!-- RIGHT: EMERGENCY STOCK SURVIVAL DURATION CHART -->
+        <div class="content-card hero-chart-card">
+          <div class="card-head">
+            <div class="card-head-title" id="uiSurvivalChartTitle"><i class="fa-solid fa-clock-rotate-left text-amber"></i> Emergency Stock Duration & Fuel Autonomy</div>
+            <div class="card-head-sub" id="uiSurvivalChartSub"><i class="fa-solid fa-shield-cat"></i> Days sustained without imports vs IEA 90-Day Standard</div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartSurvivalDuration"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ROW 3: UPSTREAM POLICY & EMERGENCY SHOCK SIMULATOR SIDE-BY-SIDE -->
+      <div class="policy-sim-grid">
+        
+        <!-- LEFT: UPSTREAM POLICY & NOC KPI SUMMARY -->
         <div class="content-card core-summary-card">
           <div class="card-head">
             <div class="card-head-title" id="uiUpstreamTitle"><i class="fa-solid fa-compass-drafting text-purple"></i> Upstream Policy & NOC Strategy</div>
@@ -157,22 +173,6 @@
           </div>
           <div class="kpi-summary-list" id="upstreamKpiList">
             <!-- Dynamically Populated -->
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ROW 2.5: EMERGENCY STOCK SURVIVAL DURATION & DISRUPTION SIMULATOR -->
-      <div class="emergency-analytics-grid">
-        
-        <!-- LEFT: EMERGENCY STOCK SURVIVAL DURATION CHART -->
-        <div class="content-card chart-card-compact">
-          <div class="card-head">
-            <div class="card-head-title" id="uiSurvivalChartTitle"><i class="fa-solid fa-clock-rotate-left text-amber"></i> Emergency Stock Duration & Fuel Autonomy</div>
-            <div class="card-head-sub" id="uiSurvivalChartSub"><i class="fa-solid fa-shield-cat"></i> Days national demand sustained without imports vs IEA 90-Day Benchmark</div>
-          </div>
-          <div class="chart-container">
-            <canvas id="chartSurvivalDuration"></canvas>
           </div>
         </div>
 
@@ -207,7 +207,7 @@
 
       </div>
 
-      <!-- ROW 3: DOWNSTREAM, FISCAL REGIME & CAMBODIA SPOTLIGHT -->
+      <!-- ROW 4: DOWNSTREAM, FISCAL REGIME & CAMBODIA SPOTLIGHT -->
       <div class="bottom-cards-grid">
 
         <!-- CARD A: DOWNSTREAM & PRICE REGULATION -->
