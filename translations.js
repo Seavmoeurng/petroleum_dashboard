@@ -13,6 +13,11 @@ export const translations = {
     langLabel: 'ភាសាខ្មែរ',
     searchPlaceholder: 'Search KPI, tax, NOC...',
     
+    // View Tabs
+    tabOverview: '🌐 Executive Overview',
+    tabCountry: '🏳️ Country Deep-Dive',
+    tabSimulator: '⚡ Disruption Simulator',
+
     // Sidebar & Navigation Labels
     sidebarTitle: 'Benchmark Nations',
     sidebarSub: '11 Countries & Global Filter',
@@ -137,6 +142,11 @@ export const translations = {
     langLabel: 'English',
     searchPlaceholder: 'ស្វែងរក KPI, ពន្ធ, ក្រុមហ៊ុនប្រេងជាតិ...',
     
+    // View Tabs
+    tabOverview: '🌐 ទិដ្ឋភាពទូទៅសកល',
+    tabCountry: '🏳️ ប្រវត្តិសង្ខេបតាមប្រទេស',
+    tabSimulator: '⚡ ឧបករណ៍ក្លែងធ្វើវិបត្តិប្រេង',
+
     // Sidebar & Navigation Labels
     sidebarTitle: 'ប្រទេសគំរូទាំង ១១',
     sidebarSub: '១១ ប្រទេស និងទិដ្ឋភាពទូទៅ',

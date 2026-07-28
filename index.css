@@ -203,6 +203,46 @@ html, body {
   transform: translateY(-1px);
 }
 
+/* View Tabs Navigation */
+.view-tabs-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--bg-sub);
+  padding: 0.2rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-card);
+}
+
+.view-tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-title);
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+.view-tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.view-tab-btn.active {
+  background: var(--bg-card);
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+}
+
 .header-search {
   position: relative;
 }
@@ -408,6 +448,169 @@ html, body {
   gap: 0.45rem;
   overflow: hidden;
   height: 100%;
+}
+
+/* Tab Panes */
+.tab-pane {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.tab-pane.active {
+  display: flex;
+}
+
+/* Mini Donut Box in KPI Card */
+.kpi-row-with-mini-donut {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mini-donut-box {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+
+/* Structured Policy Taxonomy Matrix */
+.overview-matrix-card {
+  flex: 1.1;
+  min-height: 0;
+}
+
+.policy-taxonomy-matrix {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.tag-matrix-card {
+  background: var(--bg-sub);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.55rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tag-matrix-title {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.meta-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.meta-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--text-primary);
+  border: 1px solid var(--border-card);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.meta-tag.tag-state { background: rgba(129, 140, 248, 0.15); color: var(--accent-purple); border-color: rgba(129, 140, 248, 0.3); }
+.meta-tag.tag-auction { background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); border-color: rgba(56, 189, 248, 0.3); }
+.meta-tag.tag-rent { background: rgba(52, 211, 153, 0.15); color: var(--accent-green); border-color: rgba(52, 211, 153, 0.3); }
+.meta-tag.tag-risk { background: rgba(251, 191, 36, 0.15); color: var(--accent-amber); border-color: rgba(251, 191, 36, 0.3); }
+
+/* Country Deep-Dive 2x2 Grid */
+.country-deepdive-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Dedicated Simulator Tool Module */
+.simulator-tool-module {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+  min-height: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+}
+
+.scenario-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+.scenario-card {
+  background: var(--bg-sub);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  position: relative;
+}
+
+.scenario-card input { display: none; }
+
+.scenario-card:hover {
+  border-color: var(--accent-amber);
+  transform: translateY(-1px);
+}
+
+.scenario-card.active {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 113, 133, 0.15) 100%);
+  border-color: var(--accent-amber);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.25);
+}
+
+.scenario-card-icon {
+  font-size: 1.3rem;
+}
+
+.scenario-card-title {
+  font-family: var(--font-family-title);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.scenario-card-desc {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.simulator-tool-output {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
 }
 
 /* Dynamic View Banner */

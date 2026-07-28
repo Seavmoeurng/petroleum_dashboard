@@ -4,6 +4,7 @@ import { translations } from './translations.js';
 // Application State
 let state = {
   selectedCountryId: 'GLOBAL',
+  currentTab: 'overview',
   searchQuery: '',
   theme: localStorage.getItem('petroleum_theme') || 'dark',
   lang: localStorage.getItem('petroleum_lang') || 'en',
@@ -13,6 +14,7 @@ let state = {
 // Chart Instances
 let chartReserves = null;
 let chartSurvival = null;
+let chartDonut = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
@@ -34,6 +36,7 @@ function toggleTheme() {
   updateThemeButton();
   renderChart();
   renderEmergencySurvivalChart();
+  renderMiniOwnershipDonut();
 }
 
 function updateThemeButton() {
@@ -96,7 +99,8 @@ function initEvents() {
   const themeBtn = document.getElementById('themeToggleBtn');
   const langBtn = document.getElementById('langToggleBtn');
   const printBtn = document.getElementById('printA4Btn');
-  const scenarioBtns = document.querySelectorAll('.scenario-btn');
+  const tabBtns = document.querySelectorAll('.view-tab-btn');
+  const scenarioBtns = document.querySelectorAll('.scenario-btn, .scenario-card');
 
   if (langBtn) {
     langBtn.addEventListener('click', toggleLanguage);
@@ -119,6 +123,17 @@ function initEvents() {
     });
   }
 
+  // View Tab Switcher Handlers
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.getAttribute('data-tab');
+      if (tab && state.currentTab !== tab) {
+        state.currentTab = tab;
+        switchTab(tab);
+      }
+    });
+  });
+
   scenarioBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       scenarioBtns.forEach(b => b.classList.remove('active'));
@@ -128,9 +143,40 @@ function initEvents() {
         radio.checked = true;
         state.selectedScenario = radio.value;
         renderEmergencySimulator();
+        renderSimulatorTool();
       }
     });
   });
+}
+
+// Switch Active View Tab
+function switchTab(tabId) {
+  const tabBtns = document.querySelectorAll('.view-tab-btn');
+  const panes = document.querySelectorAll('.tab-pane');
+
+  tabBtns.forEach(b => {
+    if (b.getAttribute('data-tab') === tabId) {
+      b.classList.add('active');
+    } else {
+      b.classList.remove('active');
+    }
+  });
+
+  panes.forEach(p => {
+    if (p.id === `pane${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`) {
+      p.classList.add('active');
+    } else {
+      p.classList.remove('active');
+    }
+  });
+
+  // If switching to country tab, default to Venezuela if currently Global
+  if (tabId === 'country' && state.selectedCountryId === 'GLOBAL') {
+    state.selectedCountryId = 'venezuela';
+    renderCountrySidebar();
+  }
+
+  renderAllViews();
 }
 
 // Master Render Function
@@ -138,6 +184,19 @@ function renderAllViews() {
   renderStaticUiText();
   renderCountrySidebar();
   renderBanner();
+  renderCountryBanner();
+  renderTopKpis();
+  renderMiniOwnershipDonut();
+  renderChart();
+  renderEmergencySurvivalChart();
+  renderOverviewTaxonomyMatrix();
+  renderEmergencySimulator();
+  renderSimulatorTool();
+  renderUpstreamKpis();
+  renderDownstreamKpis();
+  renderFiscalKpis();
+  renderRiskKpis();
+}
   renderTopKpis();
   renderChart();
   renderEmergencySurvivalChart();
@@ -450,7 +509,7 @@ function renderChart() {
   });
 }
 
-// 3.5 Render Chart: Emergency Stock Survival Duration Bar Chart
+// 3.5 Render Chart: Emergency Stock Survival Duration Horizontal Bar Chart
 function renderEmergencySurvivalChart() {
   const ctx = document.getElementById('chartSurvivalDuration');
   if (!ctx) return;
@@ -460,7 +519,6 @@ function renderEmergencySurvivalChart() {
   const textColor = isLight ? '#64748B' : '#94A3B8';
   const barDefault = isLight ? '#D97706' : '#FBBF24';
 
-  // Flexible Filter: All Countries vs Single Country
   let displayData = [...petroleumData].sort((a, b) => a.rank - b.rank);
   if (state.selectedCountryId !== 'GLOBAL') {
     displayData = displayData.filter(d => d.id === state.selectedCountryId);
@@ -480,7 +538,7 @@ function renderEmergencySurvivalChart() {
 
   if (chartSurvival) chartSurvival.destroy();
 
-  // Custom Inline Plugin to draw text & data labels directly on bars
+  // Custom Inline Plugin to draw data labels to the right of horizontal bars
   const dataLabelsPlugin = {
     id: 'customDataLabelsSurvival',
     afterDatasetsDraw(chart) {
@@ -494,9 +552,9 @@ function renderEmergencySurvivalChart() {
 
           ctx.fillStyle = isLight ? '#D97706' : '#FBBF24';
           ctx.font = `${isSingle ? '700 11px' : '600 8.5px'} ${state.lang === 'km' ? 'Kantumruy Pro' : 'Inter'}, sans-serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'bottom';
-          ctx.fillText(text, bar.x, bar.y - 2);
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(text, bar.x + 4, bar.y);
         });
       });
       ctx.restore();
@@ -513,7 +571,7 @@ function renderEmergencySurvivalChart() {
           data: dataValues,
           backgroundColor: barDefault,
           borderRadius: 4,
-          maxBarThickness: isSingle ? 50 : 16,
+          maxBarThickness: isSingle ? 30 : 12,
           categoryPercentage: isSingle ? 0.4 : 0.7,
           barPercentage: isSingle ? 0.5 : 0.8
         }
@@ -521,10 +579,11 @@ function renderEmergencySurvivalChart() {
     },
     plugins: [dataLabelsPlugin],
     options: {
+      indexAxis: 'y',
       responsive: true,
       maintainAspectRatio: false,
       layout: {
-        padding: { top: 12, bottom: 0, left: 0, right: 0 }
+        padding: { top: 4, bottom: 4, left: 0, right: 35 }
       },
       plugins: {
         legend: { display: false },
@@ -543,18 +602,157 @@ function renderEmergencySurvivalChart() {
       },
       scales: {
         x: {
-          ticks: { color: textColor, font: { size: isSingle ? 10 : 8.5, weight: '700', family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
-          grid: { display: false }
-        },
-        y: {
           ticks: { color: textColor, font: { size: 8.5, family: 'Inter' } },
           grid: { color: gridColor },
           title: { display: true, text: state.lang === 'km' ? 'ចំនួនថ្ងៃ (Days)' : 'Days of Autonomy', color: textColor, font: { size: 8.5, family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
           max: isSingle ? Math.ceil(dataValues[0] * 1.35) : 200
+        },
+        y: {
+          ticks: { color: textColor, font: { size: isSingle ? 10 : 8.5, weight: '700', family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          grid: { display: false }
         }
       }
     }
   });
+}
+
+// Render NOC Ownership Model Micro-Visual Donut Chart
+function renderMiniOwnershipDonut() {
+  const ctx = document.getElementById('chartMiniOwnership');
+  if (!ctx) return;
+
+  if (chartDonut) chartDonut.destroy();
+
+  chartDonut = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['State Monopoly (9)', 'Private/Auction (2)'],
+      datasets: [{
+        data: [9, 2],
+        backgroundColor: ['#818CF8', '#38BDF8'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      cutout: '72%',
+      responsive: false,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: true }
+      }
+    }
+  });
+}
+
+// Render Overview Structured Taxonomy Matrix
+function renderOverviewTaxonomyMatrix() {
+  const container = document.getElementById('overviewTaxonomyMatrix');
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="tag-matrix-card">
+      <div class="tag-matrix-title"><i class="fa-solid fa-file-contract text-cyan"></i> Upstream Concession Models</div>
+      <div class="meta-tags-container">
+        <span class="meta-tag tag-auction" title="USA & Canada lease auctions">Lease Auctions (USA/CAN)</span>
+        <span class="meta-tag tag-state" title="China & Brazil Production Sharing Contracts">PSC Contracts (CHN/BRA)</span>
+        <span class="meta-tag tag-rent" title="Saudi Aramco & Kuwait Oil Co state monopolies">State Monopolies (SAU/KWT)</span>
+        <span class="meta-tag tag-risk" title="Kuwait, Iraq, Iran service agreements">Technical Service Contracts (IRQ/IRN)</span>
+      </div>
+    </div>
+
+    <div class="tag-matrix-card">
+      <div class="tag-matrix-title"><i class="fa-solid fa-hand-holding-dollar text-green"></i> Primary State Rent Take</div>
+      <div class="meta-tags-container">
+        <span class="meta-tag tag-rent" title="Iraq TSC & Kuwait TSA state take">>90% State Take (IRQ/KWT/IRN)</span>
+        <span class="meta-tag tag-state" title="Saudi Aramco & UAE fiscal take">50%-70% Rent Take (SAU/UAE/BRA)</span>
+        <span class="meta-tag tag-auction" title="USA federal lease take">~30% State Rent (USA)</span>
+      </div>
+    </div>
+
+    <div class="tag-matrix-card">
+      <div class="tag-matrix-title"><i class="fa-solid fa-gas-pump text-amber"></i> Retail Fuel Pricing Architecture</div>
+      <div class="meta-tags-container">
+        <span class="meta-tag tag-auction" title="Free market retail pricing">Free Market Pricing (USA/CAN)</span>
+        <span class="meta-tag tag-state" title="10-day ceiling and price formula">Formula Ceiling (CHN/UAE)</span>
+        <span class="meta-tag tag-risk" title="State subsidized fuel pricing">Heavy State Subsidies (KWT/IRN/VEN)</span>
+      </div>
+    </div>
+  `;
+}
+
+// Render Full-Width Interactive Simulator Tool View
+function renderSimulatorTool() {
+  const container = document.getElementById('simulatorToolOutput');
+  if (!container) return;
+
+  const t = translations[state.lang];
+  const scenario = state.selectedScenario;
+
+  let globalDays = 90;
+  let scenarioLabel = t.scenario100;
+  if (scenario === '50') {
+    globalDays = 180;
+    scenarioLabel = t.scenario50;
+  } else if (scenario === 'ration') {
+    globalDays = 112;
+    scenarioLabel = t.scenarioRation;
+  }
+
+  const isCompliant = globalDays >= 90;
+  const badgeClass = isCompliant ? 'status-pill-safe' : 'status-pill-critical';
+
+  container.innerHTML = `
+    <div class="sim-metric-box" style="padding: 0.85rem 1.1rem;">
+      <div class="sim-metric-left">
+        <span class="sim-metric-title">${t.labelSurvivalDays}</span>
+        <span class="sim-metric-value" style="font-size: 2rem;">~${globalDays} ${state.lang === 'km' ? 'ថ្ងៃ' : 'Days'}</span>
+        <span class="sim-metric-sub"><i class="fa-solid fa-earth-americas text-cyan"></i> Global Average Fuel Autonomy (${scenarioLabel})</span>
+      </div>
+      <span class="${badgeClass}" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">
+        <i class="fa-solid ${isCompliant ? 'fa-circle-check' : 'fa-circle-exclamation'}"></i>
+        ${isCompliant ? 'IEA 90-Day Standard Compliant' : 'Below IEA 90-Day Standard'}
+      </span>
+    </div>
+
+    <div class="sim-details-list" style="gap: 0.4rem;">
+      <div class="sim-detail-item" style="padding: 0.45rem 0.65rem; font-size: 0.78rem;">
+        <i class="fa-solid fa-shield-halved text-cyan" style="margin-top:2px;"></i>
+        <div><strong>${state.lang === 'km' ? 'ប្រទេសនាំចេញ (Exporters)' : 'Net Exporters'} (Saudi, Russia, UAE, Iran, Iraq, Kuwait, Venezuela):</strong> ${state.lang === 'km' ? 'ទ្រទ្រង់បានលើសពី ៣៦៥ ថ្ងៃ (ផលិតកម្មក្នុងស្រុកគ្រប់គ្រាន់)' : '>365 Days Autonomy (Domestic crude self-sufficient)'}</div>
+      </div>
+      <div class="sim-detail-item" style="padding: 0.45rem 0.65rem; font-size: 0.78rem;">
+        <i class="fa-solid fa-building-columns text-purple" style="margin-top:2px;"></i>
+        <div><strong>${state.lang === 'km' ? 'ប្រទេសនាំចូលធំៗ (Major Importers)' : 'Major Dual/Importers'}:</strong> USA (~120d SPR), China (~100d SPR), Canada (>180d Hubs), Brazil (~45d Buffer)</div>
+      </div>
+      <div class="sim-detail-item" style="padding: 0.45rem 0.65rem; font-size: 0.78rem;">
+        <i class="fa-solid fa-flag text-amber" style="margin-top:2px;"></i>
+        <div><strong>${t.cambodiaSpotlightTitle}:</strong> ${state.lang === 'km' ? 'កម្ពុជាមានស្តុកប្រេងអាសន្ន ~២១ ដល់ ៣០ ថ្ងៃ (ពឹងផ្អែកលើការនាំចូល ១០០%)' : 'Cambodia baseline survival is ~21-30 days commercial stock (100% import dependent)'}</div>
+      </div>
+    </div>
+  `;
+}
+
+// Render Country Profile Banner for Tab 2
+function renderCountryBanner() {
+  const titleElem = document.getElementById('countryBannerTitle');
+  const subtitleElem = document.getElementById('countryBannerSubtitle');
+  const badgesElem = document.getElementById('countryBannerBadges');
+  const t = translations[state.lang];
+
+  const country = petroleumData.find(c => c.id === state.selectedCountryId) || petroleumData[0];
+  if (country && titleElem) {
+    const countryNameDisplay = state.lang === 'km' ? translateCountryName(country.country) : country.country;
+    titleElem.innerHTML = `<i class="fa-solid fa-flag text-cyan"></i> ${countryNameDisplay} ${t.profileTitleSuffix}`;
+    if (subtitleElem) subtitleElem.textContent = `${t.provenRankPrefix}${country.rank} | ${t.tradeStatusLabel}${country.tradeStatus}`;
+    if (badgesElem) {
+      const tradeClass = country.tradeStatus === 'Net Exporter' ? 'pill-green' : 'pill-cyan';
+      badgesElem.innerHTML = `
+        <span class="kpi-pill ${tradeClass}"><i class="fa-solid fa-arrow-right-arrow-left"></i> ${country.tradeStatus}</span>
+        <span class="kpi-pill pill-purple"><i class="fa-solid fa-trophy"></i> Rank #${country.rank}</span>
+        <span class="kpi-pill pill-amber"><i class="fa-solid fa-file-contract"></i> ${country.oilReserveSpr.licensingModel}</span>
+      `;
+    }
+  }
 }
 
 // 3.6 Render Emergency Supply Shock & Cut-Off Simulator Output

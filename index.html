@@ -30,6 +30,19 @@
         </div>
       </div>
 
+      <!-- VIEW TABS NAVIGATION -->
+      <div class="view-tabs-nav">
+        <button class="view-tab-btn active" id="tabOverview" data-tab="overview">
+          <i class="fa-solid fa-chart-pie"></i> <span id="uiTabOverview">Overview</span>
+        </button>
+        <button class="view-tab-btn" id="tabCountry" data-tab="country">
+          <i class="fa-solid fa-flag"></i> <span id="uiTabCountry">Country Deep-Dive</span>
+        </button>
+        <button class="view-tab-btn" id="tabSimulator" data-tab="simulator">
+          <i class="fa-solid fa-sliders"></i> <span id="uiTabSimulator">Simulator</span>
+        </button>
+      </div>
+
       <!-- Header Action Controls -->
       <div class="country-nav">
         <!-- Language Switcher Toggle Button -->
@@ -81,168 +94,222 @@
       <!-- MAIN DASHBOARD WEB VIEW -->
       <main class="dashboard-viewport">
 
-      <!-- DYNAMIC BANNER TABS -->
-      <div class="view-banner" id="viewBanner">
-        <div class="banner-left">
-          <div class="banner-title" id="bannerTitle"><i class="fa-solid fa-chart-line text-cyan"></i> Global Petroleum Executive Overview</div>
-          <div class="banner-subtitle" id="bannerSubtitle">Comparing 11 Benchmark Nations | Total Proven Crude: ~1.77 Trillion Barrels</div>
-        </div>
-        <div class="banner-badges" id="bannerBadges">
-          <span class="kpi-pill pill-cyan" id="badge11"><i class="fa-solid fa-earth-americas"></i> 11 Benchmark Nations</span>
-          <span class="kpi-pill pill-purple" id="badgeTaxonomy"><i class="fa-solid fa-layer-group"></i> Policy Taxonomy</span>
-          <span class="kpi-pill pill-green" id="badgeFiscal"><i class="fa-solid fa-sack-dollar"></i> Fiscal Rent Benchmark</span>
-        </div>
-      </div>
+        <!-- ==================== TAB PANE 1: OVERVIEW ==================== -->
+        <div class="tab-pane active" id="paneOverview">
 
-      <!-- ROW 1: 4 AT-A-GLANCE KPI CARDS -->
-      <div class="kpi-cards-grid" id="kpiCardsGrid">
-        
-        <div class="kpi-card card-cyan">
-          <div class="kpi-header">
-            <span class="kpi-title" id="uiKpiReservesTitle"><i class="fa-solid fa-drum text-cyan"></i> PROVEN OIL RESERVES</span>
-            <div class="kpi-icon"><i class="fa-solid fa-barrel-oil"></i></div>
-          </div>
-          <div class="kpi-value" id="kpiValReserves">~1.77 T bbls</div>
-          <div class="kpi-foot" id="kpiFootReserves"><i class="fa-solid fa-chart-simple"></i> Global Dataset Total (Rank #1 to #15)</div>
-        </div>
-
-        <div class="kpi-card card-purple">
-          <div class="kpi-header">
-            <span class="kpi-title" id="uiKpiOwnershipTitle"><i class="fa-solid fa-building-flag text-purple"></i> OWNERSHIP & NOC MODEL</span>
-            <div class="kpi-icon"><i class="fa-solid fa-landmark"></i></div>
-          </div>
-          <div class="kpi-value" id="kpiValOwnership">State Monopoly</div>
-          <div class="kpi-foot" id="kpiFootOwnership"><i class="fa-solid fa-shield-halved"></i> 9 of 11 Nations State/Crown Owned</div>
-        </div>
-
-        <div class="kpi-card card-green">
-          <div class="kpi-header">
-            <span class="kpi-title" id="uiKpiFiscalTitle"><i class="fa-solid fa-hand-holding-dollar text-green"></i> PRIMARY FISCAL RENT</span>
-            <div class="kpi-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-          </div>
-          <div class="kpi-value" id="kpiValFiscal">15% - 45% Royalty</div>
-          <div class="kpi-foot" id="kpiFootFiscal"><i class="fa-solid fa-percent"></i> CIT: 15% to 85% Across Value Chain</div>
-        </div>
-
-        <div class="kpi-card card-amber">
-          <div class="kpi-header">
-            <span class="kpi-title" id="uiKpiSprTitle"><i class="fa-solid fa-vault text-amber"></i> STRATEGIC STORAGE (SPR)</span>
-            <div class="kpi-icon"><i class="fa-solid fa-warehouse"></i></div>
-          </div>
-          <div class="kpi-value" id="kpiValSpr">~1.4B bbls SPR</div>
-          <div class="kpi-foot" id="kpiFootSpr"><i class="fa-solid fa-boxes-stacked"></i> China ~1.4B | USA ~415M bbls Salt Caverns</div>
-        </div>
-
-      </div>
-
-      <!-- ROW 2: BOTH VISUAL BENCHMARK CHARTS SIDE-BY-SIDE -->
-      <div class="charts-row-grid">
-
-        <!-- LEFT: PROVEN RESERVES BAR CHART HERO -->
-        <div class="content-card hero-chart-card">
-          <div class="card-head">
-            <div class="card-head-title" id="uiChartTitle"><i class="fa-solid fa-chart-column text-cyan"></i> Proven Crude Oil Reserve Ranking</div>
-            <div class="card-head-sub" id="uiChartSub"><i class="fa-solid fa-scale-balanced"></i> Reserves in Billion Barrels (bbls)</div>
-          </div>
-          <div class="chart-container">
-            <canvas id="chartReservesRanking"></canvas>
-          </div>
-        </div>
-
-        <!-- RIGHT: EMERGENCY STOCK SURVIVAL DURATION CHART -->
-        <div class="content-card hero-chart-card">
-          <div class="card-head">
-            <div class="card-head-title" id="uiSurvivalChartTitle"><i class="fa-solid fa-clock-rotate-left text-amber"></i> Emergency Stock Duration & Fuel Autonomy</div>
-            <div class="card-head-sub" id="uiSurvivalChartSub"><i class="fa-solid fa-shield-cat"></i> Days sustained without imports vs IEA 90-Day Standard</div>
-          </div>
-          <div class="chart-container">
-            <canvas id="chartSurvivalDuration"></canvas>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ROW 3: UPSTREAM POLICY & EMERGENCY SHOCK SIMULATOR SIDE-BY-SIDE -->
-      <div class="policy-sim-grid">
-        
-        <!-- LEFT: UPSTREAM POLICY & NOC KPI SUMMARY -->
-        <div class="content-card core-summary-card">
-          <div class="card-head">
-            <div class="card-head-title" id="uiUpstreamTitle"><i class="fa-solid fa-compass-drafting text-purple"></i> Upstream Policy & NOC Strategy</div>
-            <div class="card-head-sub" id="uiUpstreamSub"><i class="fa-solid fa-sliders"></i> Licensing, State Rights & Reservoir Rules</div>
-          </div>
-          <div class="kpi-summary-list" id="upstreamKpiList">
-            <!-- Dynamically Populated -->
-          </div>
-        </div>
-
-        <!-- RIGHT: INTERACTIVE EMERGENCY SIMULATOR & AUTONOMY CALCULATOR -->
-        <div class="content-card emergency-simulator-card">
-          <div class="card-head">
-            <div class="card-head-title" id="uiSimulatorTitle"><i class="fa-solid fa-triangle-exclamation text-amber"></i> Emergency Supply Shock & Cut-Off Simulator</div>
-            <div class="card-head-sub" id="uiSimulatorSub"><i class="fa-solid fa-sliders"></i> Select emergency disruption level to calculate survival days</div>
+          <!-- DYNAMIC BANNER -->
+          <div class="view-banner" id="viewBanner">
+            <div class="banner-left">
+              <div class="banner-title" id="bannerTitle"><i class="fa-solid fa-chart-line text-cyan"></i> Global Petroleum Executive Overview</div>
+              <div class="banner-subtitle" id="bannerSubtitle">Comparing 11 Benchmark Nations | Total Proven Crude: ~1.77 Trillion Barrels</div>
+            </div>
+            <div class="banner-badges" id="bannerBadges">
+              <span class="kpi-pill pill-cyan" id="badge11"><i class="fa-solid fa-earth-americas"></i> 11 Benchmark Nations</span>
+              <span class="kpi-pill pill-purple" id="badgeTaxonomy"><i class="fa-solid fa-layer-group"></i> Policy Taxonomy</span>
+              <span class="kpi-pill pill-green" id="badgeFiscal"><i class="fa-solid fa-sack-dollar"></i> Fiscal Rent Benchmark</span>
+            </div>
           </div>
 
-          <!-- Scenario Controls -->
-          <div class="simulator-controls">
-            <label class="scenario-btn active" data-scenario="100">
-              <input type="radio" name="emergencyScenario" value="100" checked>
-              <i class="fa-solid fa-ban"></i> <span id="uiScenario100">100% Import Cut-Off</span>
-            </label>
-            <label class="scenario-btn" data-scenario="50">
-              <input type="radio" name="emergencyScenario" value="50">
-              <i class="fa-solid fa-bolt text-amber"></i> <span id="uiScenario50">50% Supply Shock</span>
-            </label>
-            <label class="scenario-btn" data-scenario="ration">
-              <input type="radio" name="emergencyScenario" value="ration">
-              <i class="fa-solid fa-leaf text-green"></i> <span id="uiScenarioRation">Rationing (-20% Demand)</span>
-            </label>
+          <!-- TOP 4 AT-A-GLANCE KPI CARDS -->
+          <div class="kpi-cards-grid" id="kpiCardsGrid">
+            
+            <div class="kpi-card card-cyan">
+              <div class="kpi-header">
+                <span class="kpi-title" id="uiKpiReservesTitle"><i class="fa-solid fa-drum text-cyan"></i> PROVEN OIL RESERVES</span>
+                <div class="kpi-icon"><i class="fa-solid fa-barrel-oil"></i></div>
+              </div>
+              <div class="kpi-value" id="kpiValReserves">~1.77 T bbls</div>
+              <div class="kpi-foot" id="kpiFootReserves"><i class="fa-solid fa-chart-simple"></i> Global Dataset Total (Rank #1 to #15)</div>
+            </div>
+
+            <div class="kpi-card card-purple">
+              <div class="kpi-header">
+                <span class="kpi-title" id="uiKpiOwnershipTitle"><i class="fa-solid fa-building-flag text-purple"></i> OWNERSHIP & NOC MODEL</span>
+                <div class="kpi-icon"><i class="fa-solid fa-landmark"></i></div>
+              </div>
+              <div class="kpi-row-with-mini-donut">
+                <div>
+                  <div class="kpi-value" id="kpiValOwnership">State Monopoly</div>
+                  <div class="kpi-foot" id="kpiFootOwnership"><i class="fa-solid fa-shield-halved"></i> 9 of 11 Nations State Owned</div>
+                </div>
+                <div class="mini-donut-box" title="9 of 11 Nations State/Crown Monopoly">
+                  <canvas id="chartMiniOwnership" width="36" height="36"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="kpi-card card-green">
+              <div class="kpi-header">
+                <span class="kpi-title" id="uiKpiFiscalTitle"><i class="fa-solid fa-hand-holding-dollar text-green"></i> PRIMARY FISCAL RENT</span>
+                <div class="kpi-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+              </div>
+              <div class="kpi-value" id="kpiValFiscal">15% - 45% Royalty</div>
+              <div class="kpi-foot" id="kpiFootFiscal"><i class="fa-solid fa-percent"></i> CIT: 15% to 85% Across Value Chain</div>
+            </div>
+
+            <div class="kpi-card card-amber">
+              <div class="kpi-header">
+                <span class="kpi-title" id="uiKpiSprTitle"><i class="fa-solid fa-vault text-amber"></i> STRATEGIC STORAGE (SPR)</span>
+                <div class="kpi-icon"><i class="fa-solid fa-warehouse"></i></div>
+              </div>
+              <div class="kpi-value" id="kpiValSpr">~1.4B bbls SPR</div>
+              <div class="kpi-foot" id="kpiFootSpr"><i class="fa-solid fa-boxes-stacked"></i> China ~1.4B | USA ~415M bbls Salt Caverns</div>
+            </div>
+
           </div>
 
-          <!-- Simulator Dynamic Output Display -->
-          <div class="simulator-output" id="simulatorOutput">
-            <!-- Dynamically Populated by app.js -->
+          <!-- BOTH VISUAL BENCHMARK CHARTS SIDE-BY-SIDE -->
+          <div class="charts-row-grid">
+
+            <!-- LEFT: PROVEN RESERVES BAR CHART HERO -->
+            <div class="content-card hero-chart-card">
+              <div class="card-head">
+                <div class="card-head-title" id="uiChartTitle"><i class="fa-solid fa-chart-column text-cyan"></i> Proven Crude Oil Reserve Ranking</div>
+                <div class="card-head-sub" id="uiChartSub"><i class="fa-solid fa-scale-balanced"></i> Reserves in Billion Barrels (bbls)</div>
+              </div>
+              <div class="chart-container">
+                <canvas id="chartReservesRanking"></canvas>
+              </div>
+            </div>
+
+            <!-- RIGHT: ROTATED HORIZONTAL EMERGENCY STOCK AUTONOMY CHART -->
+            <div class="content-card hero-chart-card">
+              <div class="card-head">
+                <div class="card-head-title" id="uiSurvivalChartTitle"><i class="fa-solid fa-clock-rotate-left text-amber"></i> Fuel Autonomy & Emergency Stock Duration</div>
+                <div class="card-head-sub" id="uiSurvivalChartSub"><i class="fa-solid fa-shield-cat"></i> Days sustained without imports vs IEA 90-Day Standard</div>
+              </div>
+              <div class="chart-container">
+                <canvas id="chartSurvivalDuration"></canvas>
+              </div>
+            </div>
+
           </div>
+
+          <!-- GLOBAL POLICY TAXONOMY STRUCTURED MATRIX -->
+          <div class="content-card overview-matrix-card">
+            <div class="card-head">
+              <div class="card-head-title"><i class="fa-solid fa-layer-group text-purple"></i> Global Policy & Fiscal Regime Taxonomy Matrix</div>
+              <div class="card-head-sub"><i class="fa-solid fa-circle-info text-cyan"></i> Structured Tags & Benchmarks across 11 Economies</div>
+            </div>
+            <div class="policy-taxonomy-matrix" id="overviewTaxonomyMatrix">
+              <!-- Dynamically Populated by app.js -->
+            </div>
+          </div>
+
         </div>
 
-      </div>
-
-      <!-- ROW 4: DOWNSTREAM, FISCAL REGIME & CAMBODIA SPOTLIGHT -->
-      <div class="bottom-cards-grid">
-
-        <!-- CARD A: DOWNSTREAM & PRICE REGULATION -->
-        <div class="content-card">
-          <div class="card-head">
-            <div class="card-head-title" id="uiDownstreamTitle"><i class="fa-solid fa-gas-pump text-green"></i> Downstream & Price Policy</div>
+        <!-- ==================== TAB PANE 2: COUNTRY DEEP-DIVE ==================== -->
+        <div class="tab-pane" id="paneCountry">
+          
+          <div class="view-banner" id="countryBanner">
+            <div class="banner-left">
+              <div class="banner-title" id="countryBannerTitle"><i class="fa-solid fa-flag text-cyan"></i> Country Deep-Dive Profile</div>
+              <div class="banner-subtitle" id="countryBannerSubtitle">Select a nation from the left sidebar to view comprehensive policy analytics</div>
+            </div>
+            <div class="banner-badges" id="countryBannerBadges">
+              <!-- Dynamically Populated -->
+            </div>
           </div>
-          <div class="kpi-summary-list" id="downstreamKpiList">
-            <!-- Dynamically Populated -->
+
+          <div class="country-deepdive-grid">
+
+            <!-- CARD 1: UPSTREAM POLICY -->
+            <div class="content-card">
+              <div class="card-head">
+                <div class="card-head-title" id="uiUpstreamTitle"><i class="fa-solid fa-compass-drafting text-purple"></i> Upstream Policy & NOC Strategy</div>
+              </div>
+              <div class="kpi-summary-list" id="upstreamKpiList">
+                <!-- Dynamically Populated -->
+              </div>
+            </div>
+
+            <!-- CARD 2: DOWNSTREAM & PRICES -->
+            <div class="content-card">
+              <div class="card-head">
+                <div class="card-head-title" id="uiDownstreamTitle"><i class="fa-solid fa-gas-pump text-green"></i> Downstream & Retail Price Policy</div>
+              </div>
+              <div class="kpi-summary-list" id="downstreamKpiList">
+                <!-- Dynamically Populated -->
+              </div>
+            </div>
+
+            <!-- CARD 3: TAX & FISCAL REGIME -->
+            <div class="content-card">
+              <div class="card-head">
+                <div class="card-head-title" id="uiFiscalTitle"><i class="fa-solid fa-coins text-amber"></i> Tax Architecture & Real Take</div>
+              </div>
+              <div class="kpi-summary-list" id="fiscalKpiList">
+                <!-- Dynamically Populated -->
+              </div>
+            </div>
+
+            <!-- CARD 4: RISK & CAMBODIA LESSON -->
+            <div class="content-card spotlight-card">
+              <div class="card-head">
+                <div class="card-head-title" id="uiRiskTitle"><i class="fa-solid fa-shield-halved text-cyan"></i> Risk & Cambodia Strategic Takeaway</div>
+              </div>
+              <div class="kpi-summary-list" id="riskKpiList">
+                <!-- Dynamically Populated -->
+              </div>
+            </div>
+
           </div>
+
         </div>
 
-        <!-- CARD B: TAX (FISCAL REGIME & STATE TAKE) -->
-        <div class="content-card">
-          <div class="card-head">
-            <div class="card-head-title" id="uiFiscalTitle"><i class="fa-solid fa-coins text-amber"></i> Tax Architecture & Real Take</div>
+        <!-- ==================== TAB PANE 3: DISRUPTION SIMULATOR ==================== -->
+        <div class="tab-pane" id="paneSimulator">
+
+          <div class="view-banner">
+            <div class="banner-left">
+              <div class="banner-title" id="uiSimulatorTitle"><i class="fa-solid fa-triangle-exclamation text-amber"></i> Emergency Supply Shock & Cut-Off Simulator</div>
+              <div class="banner-subtitle" id="uiSimulatorSub"><i class="fa-solid fa-sliders"></i> Interactive model evaluating national fuel autonomy under embargoes & supply cut-offs</div>
+            </div>
           </div>
-          <div class="kpi-summary-list" id="fiscalKpiList">
-            <!-- Dynamically Populated -->
+
+          <!-- FULL-WIDTH INTERACTIVE SIMULATOR TOOL MODULE -->
+          <div class="simulator-tool-module">
+            
+            <!-- SCENARIO CARDS -->
+            <div class="scenario-cards-row">
+              <div class="scenario-card active" data-scenario="100">
+                <input type="radio" name="emergencyScenarioTool" value="100" checked>
+                <div class="scenario-card-icon"><i class="fa-solid fa-ban text-rose"></i></div>
+                <div class="scenario-card-body">
+                  <div class="scenario-card-title" id="uiScenario100">100% Import Cut-Off</div>
+                  <div class="scenario-card-desc">Complete maritime blockade or supply termination</div>
+                </div>
+              </div>
+
+              <div class="scenario-card" data-scenario="50">
+                <input type="radio" name="emergencyScenarioTool" value="50">
+                <div class="scenario-card-icon"><i class="fa-solid fa-bolt text-amber"></i></div>
+                <div class="scenario-card-body">
+                  <div class="scenario-card-title" id="uiScenario50">50% Supply Shock</div>
+                  <div class="scenario-card-desc">Severe regional chokepoint crisis or refinery outage</div>
+                </div>
+              </div>
+
+              <div class="scenario-card" data-scenario="ration">
+                <input type="radio" name="emergencyScenarioTool" value="ration">
+                <div class="scenario-card-icon"><i class="fa-solid fa-leaf text-green"></i></div>
+                <div class="scenario-card-body">
+                  <div class="scenario-card-title" id="uiScenarioRation">Rationing (-20% Demand)</div>
+                  <div class="scenario-card-desc">State mandated fuel conservation & essential supply allocation</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SIMULATOR GAUGE & METRICS DISPLAY -->
+            <div class="simulator-tool-output" id="simulatorToolOutput">
+              <!-- Dynamically Populated by app.js -->
+            </div>
+
           </div>
+
         </div>
 
-        <!-- CARD C: RISK & CAMBODIA STRATEGIC LESSON -->
-        <div class="content-card spotlight-card">
-          <div class="card-head">
-            <div class="card-head-title" id="uiRiskTitle"><i class="fa-solid fa-shield-halved text-cyan"></i> Risk & Cambodia Strategic Takeaway</div>
-          </div>
-          <div class="kpi-summary-list" id="riskKpiList">
-            <!-- Dynamically Populated -->
-          </div>
-        </div>
-
-      </div>
-
-    </main>
+      </main>
 
     </div>
 
