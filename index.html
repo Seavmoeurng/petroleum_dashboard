@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <!-- Quick Country Selector Pills & Dropdown + Theme Switcher + Language Switcher + Print A4 -->
+      <!-- Header Action Controls -->
       <div class="country-nav">
         <!-- Language Switcher Toggle Button -->
         <button id="langToggleBtn" class="lang-toggle-btn" title="Toggle Language (English / Khmer)">
@@ -50,21 +50,6 @@
           <span id="themeLabel">Light Mode</span>
         </button>
 
-        <select id="countrySelectDropdown" class="country-select-dropdown">
-          <option value="GLOBAL" id="optGlobal">🌐 All Countries (Global Overview)</option>
-          <option value="venezuela">🇻🇪 Venezuela (Rank #1)</option>
-          <option value="saudi-arabia">🇸🇦 Saudi Arabia (Rank #2)</option>
-          <option value="iran">🇮🇷 Iran (Rank #3)</option>
-          <option value="canada">🇨🇦 Canada (Rank #4)</option>
-          <option value="iraq">🇮🇶 Iraq (Rank #5)</option>
-          <option value="united-arab-emirates">🇦🇪 UAE (Rank #6)</option>
-          <option value="kuwait">🇰🇼 Kuwait (Rank #7)</option>
-          <option value="russia">🇷🇺 Russia (Rank #8)</option>
-          <option value="united-states">🇺🇸 United States (Rank #11)</option>
-          <option value="china">🇨🇳 China (Rank #13)</option>
-          <option value="brazil">🇧🇷 Brazil (Rank #15)</option>
-        </select>
-
         <!-- Search Box -->
         <div class="header-search">
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -73,8 +58,28 @@
       </div>
     </header>
 
-    <!-- MAIN DASHBOARD WEB VIEW -->
-    <main class="dashboard-viewport">
+    <!-- DASHBOARD BODY: LEFT SIDEBAR + MAIN VIEWPORT -->
+    <div class="dashboard-body">
+
+      <!-- LEFT SIDEBAR: COUNTRY FILTER NAVIGATION -->
+      <aside class="country-sidebar" id="countrySidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-title-box">
+            <i class="fa-solid fa-earth-americas text-cyan"></i>
+            <div>
+              <div class="sidebar-title" id="uiSidebarTitle">Benchmark Nations</div>
+              <div class="sidebar-sub" id="uiSidebarSub">11 Countries & Global Filter</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="country-nav-list" id="countryNavList">
+          <!-- Dynamically Populated by app.js -->
+        </div>
+      </aside>
+
+      <!-- MAIN DASHBOARD WEB VIEW -->
+      <main class="dashboard-viewport">
 
       <!-- DYNAMIC BANNER TABS -->
       <div class="view-banner" id="viewBanner">
@@ -157,6 +162,51 @@
 
       </div>
 
+      <!-- ROW 2.5: EMERGENCY STOCK SURVIVAL DURATION & DISRUPTION SIMULATOR -->
+      <div class="emergency-analytics-grid">
+        
+        <!-- LEFT: EMERGENCY STOCK SURVIVAL DURATION CHART -->
+        <div class="content-card chart-card-compact">
+          <div class="card-head">
+            <div class="card-head-title" id="uiSurvivalChartTitle"><i class="fa-solid fa-clock-rotate-left text-amber"></i> Emergency Stock Duration & Fuel Autonomy</div>
+            <div class="card-head-sub" id="uiSurvivalChartSub"><i class="fa-solid fa-shield-cat"></i> Days national demand sustained without imports vs IEA 90-Day Benchmark</div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartSurvivalDuration"></canvas>
+          </div>
+        </div>
+
+        <!-- RIGHT: INTERACTIVE EMERGENCY SIMULATOR & AUTONOMY CALCULATOR -->
+        <div class="content-card emergency-simulator-card">
+          <div class="card-head">
+            <div class="card-head-title" id="uiSimulatorTitle"><i class="fa-solid fa-triangle-exclamation text-amber"></i> Emergency Supply Shock & Cut-Off Simulator</div>
+            <div class="card-head-sub" id="uiSimulatorSub"><i class="fa-solid fa-sliders"></i> Select emergency disruption level to calculate survival days</div>
+          </div>
+
+          <!-- Scenario Controls -->
+          <div class="simulator-controls">
+            <label class="scenario-btn active" data-scenario="100">
+              <input type="radio" name="emergencyScenario" value="100" checked>
+              <i class="fa-solid fa-ban"></i> <span id="uiScenario100">100% Import Cut-Off</span>
+            </label>
+            <label class="scenario-btn" data-scenario="50">
+              <input type="radio" name="emergencyScenario" value="50">
+              <i class="fa-solid fa-bolt text-amber"></i> <span id="uiScenario50">50% Supply Shock</span>
+            </label>
+            <label class="scenario-btn" data-scenario="ration">
+              <input type="radio" name="emergencyScenario" value="ration">
+              <i class="fa-solid fa-leaf text-green"></i> <span id="uiScenarioRation">Rationing (-20% Demand)</span>
+            </label>
+          </div>
+
+          <!-- Simulator Dynamic Output Display -->
+          <div class="simulator-output" id="simulatorOutput">
+            <!-- Dynamically Populated by app.js -->
+          </div>
+        </div>
+
+      </div>
+
       <!-- ROW 3: DOWNSTREAM, FISCAL REGIME & CAMBODIA SPOTLIGHT -->
       <div class="bottom-cards-grid">
 
@@ -193,6 +243,8 @@
       </div>
 
     </main>
+
+    </div>
 
   </div>
 

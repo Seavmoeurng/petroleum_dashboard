@@ -13,7 +13,9 @@ export const translations = {
     langLabel: 'ភាសាខ្មែរ',
     searchPlaceholder: 'Search KPI, tax, NOC...',
     
-    // Dropdown options
+    // Sidebar & Navigation Labels
+    sidebarTitle: 'Benchmark Nations',
+    sidebarSub: '11 Countries & Global Filter',
     allCountries: '🌐 All Countries (Global Overview)',
 
     // Banner
@@ -102,7 +104,25 @@ export const translations = {
     labelTaxSchedule: 'TAX SCHEDULE SUMMARY',
     labelHseCompliance: 'HSE & SECURITY COMPLIANCE',
     labelLessonCambodia: 'STRATEGIC LESSON FOR CAMBODIA',
-    labelReferences: 'PRIMARY REFERENCES'
+    labelReferences: 'PRIMARY REFERENCES',
+
+    // Emergency Stock & Survival Duration Analytics (en)
+    kpiSurvivalTitle: 'EMERGENCY STOCK SURVIVAL',
+    kpiSurvivalFootGlobal: 'Days of Autonomy Without Imports',
+    survivalChartTitle: 'Emergency Stock Duration & Fuel Autonomy (Without Import)',
+    survivalChartSub: 'Days national demand can be sustained strictly using SPR & domestic production vs IEA 90-Day Standard',
+    simulatorTitle: 'Emergency Disruption & Import Cut-Off Simulator',
+    simulatorSub: 'Simulate national fuel survival duration under severe supply shocks & trade embargoes',
+    scenario100: '100% Import Cut-Off (Total Blockade)',
+    scenario50: '50% Supply Shock (Severe Crisis)',
+    scenarioRation: 'Rationing (-20% Emergency Demand Reduction)',
+    labelSurvivalDays: 'DAYS OF AUTONOMY (NO IMPORT)',
+    labelDailyConsumption: 'DAILY PETROLEUM DEMAND',
+    labelImportReliance: 'NET IMPORT RELIANCE',
+    labelEmergencyNote: 'EMERGENCY RESILIENCE & BLOCKADE ASSESSMENT',
+    ieaBenchmarkLabel: 'IEA 90-Day Emergency Benchmark',
+    cambodiaSpotlightTitle: 'Cambodia Emergency Stock Buffer Spotlight',
+    cambodiaBaselineSurvival: '~21-30 Days Fuel Autonomy'
   },
 
   km: {
@@ -117,7 +137,9 @@ export const translations = {
     langLabel: 'English',
     searchPlaceholder: 'ស្វែងរក KPI, ពន្ធ, ក្រុមហ៊ុនប្រេងជាតិ...',
     
-    // Dropdown options
+    // Sidebar & Navigation Labels
+    sidebarTitle: 'ប្រទេសគំរូទាំង ១១',
+    sidebarSub: '១១ ប្រទេស និងទិដ្ឋភាពទូទៅ',
     allCountries: '🌐 ប្រទេសទាំងអស់ (ទិដ្ឋភាពទូទៅពិភពលោក)',
 
     // Banner
@@ -148,7 +170,7 @@ export const translations = {
 
     // Section Titles
     chartTitle: 'ចំណាត់ថ្នាក់បម្រុងប្រេងកាតពិភពលោក',
-    chartSub: 'បម្រុងប្រេងគិតជា ប៊ីលានបារ៉ែល (bbls)',
+    chartSub: 'បម្រុងប្រេងគិតជា ពានលានបារ៉ែល',
     
     upstreamTitle: 'គោលនយោបាយផ្នែកដើម (Upstream) & យុទ្ធសាស្ត្រ NOC',
     upstreamSub: 'អាជ្ញាប័ណ្ណ សិទ្ធិរដ្ឋ និង ការគ្រប់គ្រងអណ្តូងប្រេង',
@@ -206,6 +228,24 @@ export const translations = {
     labelTaxSchedule: 'សង្ខេបតារាងពន្ធដារ',
     labelHseCompliance: 'អនុលោមភាព HSE & សុវត្ថិភាព',
     labelLessonCambodia: 'មេរៀនយុទ្ធសាស្ត្រសម្រាប់កម្ពុជា',
-    labelReferences: 'ឯកសារយោងចម្បង'
+    labelReferences: 'ឯកសារយោងចម្បង',
+
+    // Emergency Stock & Survival Duration Analytics (km)
+    kpiSurvivalTitle: 'ថិរវេលាស្តុកប្រេងរក្សាសុវត្ថិភាពអាសន្ន',
+    kpiSurvivalFootGlobal: 'ចំនួនថ្ងៃទ្រទ្រង់ដោយគ្មានការនាំចូល',
+    survivalChartTitle: 'ថិរវេលាស្តុកប្រេងអាសន្ន និងសមត្ថភាពទ្រទ្រង់ដោយគ្មានការនាំចូល',
+    survivalChartSub: 'ចំនួនថ្ងៃដែលបម្រុងប្រេងអាចទ្រទ្រង់តម្រូវការក្នុងស្រុកដោយគ្មានការនាំចូល ប្រៀបធៀបនឹងស្តង់ដារ IEA ៩០ថ្ងៃ',
+    simulatorTitle: 'កម្មវិធីពិសោធន៍វិបត្តិប្រេង និងការបិទខ្ទប់ការនាំចូល',
+    simulatorSub: 'គណនាថិរវេលាទ្រទ្រង់ប្រេងជាតិក្រោមសេណារីយ៉ូអាសន្ន និងការកាត់ផ្តាច់ប្រេងនាំចូល',
+    scenario100: 'កាត់ផ្តាច់ការនាំចូល ១០០% (ការបិទខ្ទប់ទាំងស្រុង)',
+    scenario50: 'វិបត្តិប្រេង ៥០% (ការរំខានធ្ងន់ធ្ងរ)',
+    scenarioRation: 'ការសន្សំសំចៃអាសន្ន (កាត់បន្ថយតម្រូវការ ២០%)',
+    labelSurvivalDays: 'ចំនួនថ្ងៃទ្រទ្រង់ (គ្មានការនាំចូល)',
+    labelDailyConsumption: 'តម្រូវការប្រេងប្រចាំថ្ងៃ',
+    labelImportReliance: 'កម្រិតពឹងផ្អែកលើការនាំចូល',
+    labelEmergencyNote: 'ការវាយតម្លៃភាពធន់ និងសមត្ថភាពក្នុងគ្រាអាសន្ន',
+    ieaBenchmarkLabel: 'ស្តង់ដារ IEA ៩០ ថ្ងៃ',
+    cambodiaSpotlightTitle: 'ការវិភាគថិរវេលាស្តុកប្រេងអាសន្នសម្រាប់កម្ពុជា',
+    cambodiaBaselineSurvival: 'ទ្រទ្រង់បាន ~២១ ដល់ ៣០ ថ្ងៃ'
   }
 };

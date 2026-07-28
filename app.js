@@ -6,11 +6,13 @@ let state = {
   selectedCountryId: 'GLOBAL',
   searchQuery: '',
   theme: localStorage.getItem('petroleum_theme') || 'dark',
-  lang: localStorage.getItem('petroleum_lang') || 'en'
+  lang: localStorage.getItem('petroleum_lang') || 'en',
+  selectedScenario: '100'
 };
 
-// Chart Instance
+// Chart Instances
 let chartReserves = null;
+let chartSurvival = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
@@ -31,6 +33,7 @@ function toggleTheme() {
   document.documentElement.setAttribute('data-theme', state.theme);
   updateThemeButton();
   renderChart();
+  renderEmergencySurvivalChart();
 }
 
 function updateThemeButton() {
@@ -71,13 +74,29 @@ function updateLangButton() {
   }
 }
 
+// Country List Navigation Configuration
+const countryListConfig = [
+  { id: 'GLOBAL', flag: '🌐', rank: 'ALL', nameEn: 'All Countries (Global)', nameKm: 'ទិដ្ឋភាពទូទៅសកល' },
+  { id: 'venezuela', flag: '🇻🇪', rank: '#1', nameEn: 'Venezuela', nameKm: 'វេណេស៊ុយអេឡា' },
+  { id: 'saudi-arabia', flag: '🇸🇦', rank: '#2', nameEn: 'Saudi Arabia', nameKm: 'អារ៉ាប៊ីសាអ៊ូឌីត' },
+  { id: 'iran', flag: '🇮🇷', rank: '#3', nameEn: 'Iran', nameKm: 'អ៊ីរ៉ង់' },
+  { id: 'canada', flag: '🇨🇦', rank: '#4', nameEn: 'Canada', nameKm: 'កាណាដា' },
+  { id: 'iraq', flag: '🇮🇶', rank: '#5', nameEn: 'Iraq', nameKm: 'អ៊ីរ៉ាក់' },
+  { id: 'united-arab-emirates', flag: '🇦🇪', rank: '#6', nameEn: 'UAE', nameKm: 'សហអេមីរ៉ាត់អារ៉ាប់' },
+  { id: 'kuwait', flag: '🇰🇼', rank: '#7', nameEn: 'Kuwait', nameKm: 'កwait' },
+  { id: 'russia', flag: '🇷🇺', rank: '#8', nameEn: 'Russia', nameKm: 'រុស្ស៊ី' },
+  { id: 'united-states', flag: '🇺🇸', rank: '#11', nameEn: 'United States', nameKm: 'សហរដ្ឋអាមេរិក' },
+  { id: 'china', flag: '🇨🇳', rank: '#13', nameEn: 'China', nameKm: 'ចិន' },
+  { id: 'brazil', flag: '🇧🇷', rank: '#15', nameEn: 'Brazil', nameKm: 'ប្រេស៊ីល' }
+];
+
 // Event Listeners Initialization
 function initEvents() {
-  const countryDropdown = document.getElementById('countrySelectDropdown');
   const searchInput = document.getElementById('searchInput');
   const themeBtn = document.getElementById('themeToggleBtn');
   const langBtn = document.getElementById('langToggleBtn');
   const printBtn = document.getElementById('printA4Btn');
+  const scenarioBtns = document.querySelectorAll('.scenario-btn');
 
   if (langBtn) {
     langBtn.addEventListener('click', toggleLanguage);
@@ -93,31 +112,82 @@ function initEvents() {
     themeBtn.addEventListener('click', toggleTheme);
   }
 
-  if (countryDropdown) {
-    countryDropdown.addEventListener('change', (e) => {
-      state.selectedCountryId = e.target.value;
-      renderAllViews();
-    });
-  }
-
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       state.searchQuery = e.target.value.toLowerCase().trim();
       renderAllViews();
     });
   }
+
+  scenarioBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      scenarioBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const radio = btn.querySelector('input[type="radio"]');
+      if (radio) {
+        radio.checked = true;
+        state.selectedScenario = radio.value;
+        renderEmergencySimulator();
+      }
+    });
+  });
 }
 
 // Master Render Function
 function renderAllViews() {
   renderStaticUiText();
+  renderCountrySidebar();
   renderBanner();
   renderTopKpis();
   renderChart();
+  renderEmergencySurvivalChart();
+  renderEmergencySimulator();
   renderUpstreamKpis();
   renderDownstreamKpis();
   renderFiscalKpis();
   renderRiskKpis();
+}
+
+// Render Left Country Navigation Sidebar List
+function renderCountrySidebar() {
+  const container = document.getElementById('countryNavList');
+  if (!container) return;
+
+  const query = state.searchQuery ? state.searchQuery.toLowerCase() : '';
+
+  container.innerHTML = countryListConfig.map(item => {
+    const isActive = state.selectedCountryId === item.id;
+    const name = state.lang === 'km' ? item.nameKm : item.nameEn;
+    const pillClass = item.id === 'GLOBAL' ? 'country-rank-pill pill-global' : 'country-rank-pill';
+
+    let matchStyle = '';
+    if (query) {
+      const matches = name.toLowerCase().includes(query) || item.rank.toLowerCase().includes(query);
+      if (!matches) {
+        matchStyle = 'style="opacity: 0.35;"';
+      }
+    }
+
+    return `
+      <button class="country-nav-item ${isActive ? 'active' : ''}" data-country-id="${item.id}" title="${name}" ${matchStyle}>
+        <div class="country-nav-left">
+          <span class="country-flag">${item.flag}</span>
+          <span class="country-name-text">${name}</span>
+        </div>
+        <span class="${pillClass}">${item.rank}</span>
+      </button>
+    `;
+  }).join('');
+
+  container.querySelectorAll('.country-nav-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const countryId = btn.getAttribute('data-country-id');
+      if (countryId && state.selectedCountryId !== countryId) {
+        state.selectedCountryId = countryId;
+        renderAllViews();
+      }
+    });
+  });
 }
 
 // Translate Static UI Elements
@@ -128,13 +198,15 @@ function renderStaticUiText() {
   const brandSub = document.getElementById('uiBrandSub');
   const exportA4 = document.getElementById('uiExportA4');
   const searchInput = document.getElementById('searchInput');
-  const optGlobal = document.getElementById('optGlobal');
+  const uiSidebarTitle = document.getElementById('uiSidebarTitle');
+  const uiSidebarSub = document.getElementById('uiSidebarSub');
 
   if (brandName) brandName.innerHTML = `${t.brandName} <span class="brand-highlight">${t.brandHighlight}</span>`;
   if (brandSub) brandSub.innerHTML = `<i class="fa-solid fa-globe"></i> ${t.brandSub}`;
   if (exportA4) exportA4.textContent = t.exportA4;
   if (searchInput) searchInput.placeholder = t.searchPlaceholder;
-  if (optGlobal) optGlobal.textContent = t.allCountries;
+  if (uiSidebarTitle) uiSidebarTitle.textContent = t.sidebarTitle;
+  if (uiSidebarSub) uiSidebarSub.textContent = t.sidebarSub;
 
   // Top KPI titles
   const uiReserves = document.getElementById('uiKpiReservesTitle');
@@ -163,6 +235,23 @@ function renderStaticUiText() {
   if (downstreamTitle) downstreamTitle.innerHTML = `<i class="fa-solid fa-gas-pump text-green"></i> ${t.downstreamTitle}`;
   if (fiscalTitle) fiscalTitle.innerHTML = `<i class="fa-solid fa-coins text-amber"></i> ${t.fiscalTitle}`;
   if (riskTitle) riskTitle.innerHTML = `<i class="fa-solid fa-shield-halved text-cyan"></i> ${t.riskTitle}`;
+
+  // Emergency Analytics Titles & Scenarios
+  const uiSurvivalChartTitle = document.getElementById('uiSurvivalChartTitle');
+  const uiSurvivalChartSub = document.getElementById('uiSurvivalChartSub');
+  const uiSimulatorTitle = document.getElementById('uiSimulatorTitle');
+  const uiSimulatorSub = document.getElementById('uiSimulatorSub');
+  const uiScenario100 = document.getElementById('uiScenario100');
+  const uiScenario50 = document.getElementById('uiScenario50');
+  const uiScenarioRation = document.getElementById('uiScenarioRation');
+
+  if (uiSurvivalChartTitle) uiSurvivalChartTitle.innerHTML = `<i class="fa-solid fa-clock-rotate-left text-amber"></i> ${t.survivalChartTitle}`;
+  if (uiSurvivalChartSub) uiSurvivalChartSub.innerHTML = `<i class="fa-solid fa-shield-cat"></i> ${t.survivalChartSub}`;
+  if (uiSimulatorTitle) uiSimulatorTitle.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber"></i> ${t.simulatorTitle}`;
+  if (uiSimulatorSub) uiSimulatorSub.innerHTML = `<i class="fa-solid fa-sliders"></i> ${t.simulatorSub}`;
+  if (uiScenario100) uiScenario100.textContent = t.scenario100;
+  if (uiScenario50) uiScenario50.textContent = t.scenario50;
+  if (uiScenarioRation) uiScenarioRation.textContent = t.scenarioRation;
 }
 
 // 1. Render Top Header Banner
@@ -217,7 +306,7 @@ function renderTopKpis() {
   const elFootSpr = document.getElementById('kpiFootSpr');
 
   if (state.selectedCountryId === 'GLOBAL') {
-    if (elValReserves) elValReserves.textContent = '~1.77 T bbls';
+    if (elValReserves) elValReserves.textContent = state.lang === 'km' ? '~១.៧៧ ត្រីលានបារ៉ែល' : '~1.77 T bbls';
     if (elFootReserves) elFootReserves.innerHTML = `<i class="fa-solid fa-chart-simple"></i> ${t.kpiReservesFootGlobal}`;
 
     if (elValOwnership) elValOwnership.textContent = t.kpiOwnershipValGlobal;
@@ -234,7 +323,8 @@ function renderTopKpis() {
   const c = petroleumData.find(item => item.id === state.selectedCountryId);
   if (!c) return;
 
-  if (elValReserves) elValReserves.textContent = `${c.oilReserveSpr.provenReservesNumeric}B bbls`;
+  const reservesUnit = state.lang === 'km' ? 'ពានលានបារ៉ែល' : 'B bbls';
+  if (elValReserves) elValReserves.textContent = `${c.oilReserveSpr.provenReservesNumeric} ${reservesUnit}`;
   if (elFootReserves) elFootReserves.innerHTML = `<i class="fa-solid fa-trophy"></i> ${t.provenRankPrefix}${c.rank}`;
 
   if (elValOwnership) elValOwnership.textContent = c.oilReserveSpr.licensingModel;
@@ -244,7 +334,7 @@ function renderTopKpis() {
   if (elFootFiscal) elFootFiscal.innerHTML = `<i class="fa-solid fa-receipt"></i> CIT: ${c.taxFiscalRegime.pptCit.split('(')[0].trim()}`;
 
   if (elValSpr) elValSpr.textContent = c.oilReserveSpr.sprCapacity.split('(')[0].trim();
-  if (elFootSpr) elFootSpr.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> ${c.oilReserveSpr.stockDuration.split('(')[0].trim()}`;
+  if (elFootSpr) elFootSpr.innerHTML = `<i class="fa-solid fa-clock-rotate-left text-amber"></i> Survival: ${c.oilReserveSpr.survivalCategory}`;
 }
 
 // Helper to Translate Country Names to Khmer
@@ -273,55 +363,296 @@ function renderChart() {
   const isLight = state.theme === 'light';
   const gridColor = isLight ? '#E2E8F0' : '#334155';
   const textColor = isLight ? '#64748B' : '#94A3B8';
-  const barDefault = isLight ? '#94A3B8' : '#334155';
-  const barActive = isLight ? '#0284C7' : '#38BDF8';
+  const barDefault = isLight ? '#0284C7' : '#38BDF8';
+  const unitText = state.lang === 'km' ? 'ពានលានបារ៉ែល' : 'B bbls';
 
-  const sortedData = [...petroleumData].sort((a, b) => a.rank - b.rank);
-  const labels = sortedData.map(d => state.lang === 'km' ? translateCountryName(d.country) : d.country);
-  const dataValues = sortedData.map(d => d.oilReserveSpr.provenReservesNumeric);
+  // Flexible Filter: All Countries vs Single Country
+  let displayData = [...petroleumData].sort((a, b) => a.rank - b.rank);
+  if (state.selectedCountryId !== 'GLOBAL') {
+    displayData = displayData.filter(d => d.id === state.selectedCountryId);
+  }
 
-  const backgroundColors = sortedData.map(d => {
-    if (state.selectedCountryId === 'GLOBAL' || d.id === state.selectedCountryId) {
-      return barActive;
-    }
-    return barDefault;
-  });
+  const isSingle = displayData.length === 1;
+  const labels = displayData.map(d => state.lang === 'km' ? translateCountryName(d.country) : d.country);
+  const dataValues = displayData.map(d => d.oilReserveSpr.provenReservesNumeric);
+  const customLabels = displayData.map(d => `${d.oilReserveSpr.provenReservesNumeric} ${unitText}`);
 
   if (chartReserves) chartReserves.destroy();
+
+  // Custom Inline Plugin to draw text & data labels directly on bars
+  const dataLabelsPlugin = {
+    id: 'customDataLabelsReserves',
+    afterDatasetsDraw(chart) {
+      const { ctx } = chart;
+      ctx.save();
+      chart.data.datasets.forEach((dataset, i) => {
+        const meta = chart.getDatasetMeta(i);
+        meta.data.forEach((bar, index) => {
+          const text = customLabels[index];
+          if (!text) return;
+
+          ctx.fillStyle = isLight ? '#0F172A' : '#38BDF8';
+          ctx.font = `${isSingle ? '700 13px' : '600 10px'} ${state.lang === 'km' ? 'Kantumruy Pro' : 'Inter'}, sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          ctx.fillText(text, bar.x, bar.y - 4);
+        });
+      });
+      ctx.restore();
+    }
+  };
 
   chartReserves = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: labels,
       datasets: [{
-        label: state.lang === 'km' ? 'បម្រុងប្រេងកាត (ប៊ីលានបារ៉ែល)' : 'Proven Crude Oil Reserves (Billion bbls)',
+        label: state.lang === 'km' ? `បម្រុងប្រេងកាត (${unitText})` : `Proven Crude Oil Reserves (${unitText})`,
         data: dataValues,
-        backgroundColor: backgroundColors,
-        borderRadius: 4,
-        maxBarThickness: 22,
-        categoryPercentage: 0.7,
-        barPercentage: 0.8
+        backgroundColor: barDefault,
+        borderRadius: 6,
+        maxBarThickness: isSingle ? 80 : 22,
+        categoryPercentage: isSingle ? 0.4 : 0.7,
+        barPercentage: isSingle ? 0.5 : 0.8
       }]
     },
+    plugins: [dataLabelsPlugin],
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { display: false }
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const d = displayData[context.dataIndex];
+              return ` ${d.oilReserveSpr.provenReservesNumeric} ${unitText} (${state.lang === 'km' ? 'ចំណាត់ថ្នាក់' : 'Rank'} #${d.rank})`;
+            }
+          }
+        }
       },
       scales: {
         x: {
-          ticks: { color: textColor, font: { size: 10, weight: '600', family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          ticks: { color: textColor, font: { size: isSingle ? 12 : 10, weight: '700', family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
           grid: { display: false }
         },
         y: {
           ticks: { color: textColor, font: { family: 'Inter' } },
           grid: { color: gridColor },
-          title: { display: true, text: 'Billion bbls', color: textColor, font: { size: 10 } }
+          title: { display: true, text: unitText, color: textColor, font: { size: 10, family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          max: isSingle ? Math.ceil(dataValues[0] * 1.35) : undefined
         }
       }
     }
   });
+}
+
+// 3.5 Render Chart: Emergency Stock Survival Duration Bar Chart
+function renderEmergencySurvivalChart() {
+  const ctx = document.getElementById('chartSurvivalDuration');
+  if (!ctx) return;
+
+  const isLight = state.theme === 'light';
+  const gridColor = isLight ? '#E2E8F0' : '#334155';
+  const textColor = isLight ? '#64748B' : '#94A3B8';
+  const barDefault = isLight ? '#D97706' : '#FBBF24';
+
+  // Flexible Filter: All Countries vs Single Country
+  let displayData = [...petroleumData].sort((a, b) => a.rank - b.rank);
+  if (state.selectedCountryId !== 'GLOBAL') {
+    displayData = displayData.filter(d => d.id === state.selectedCountryId);
+  }
+
+  const isSingle = displayData.length === 1;
+  const labels = displayData.map(d => state.lang === 'km' ? translateCountryName(d.country) : d.country);
+  const dataValues = displayData.map(d => Math.min(d.oilReserveSpr.survivalDaysNoImport, 180));
+  
+  const dayUnit = state.lang === 'km' ? 'ថ្ងៃ' : 'Days';
+  const customLabels = displayData.map(d => {
+    if (d.oilReserveSpr.survivalDaysNoImport >= 365) {
+      return `>365 ${dayUnit}`;
+    }
+    return `${d.oilReserveSpr.survivalDaysNoImport} ${dayUnit}`;
+  });
+
+  if (chartSurvival) chartSurvival.destroy();
+
+  // Custom Inline Plugin to draw text & data labels directly on bars
+  const dataLabelsPlugin = {
+    id: 'customDataLabelsSurvival',
+    afterDatasetsDraw(chart) {
+      const { ctx } = chart;
+      ctx.save();
+      chart.data.datasets.forEach((dataset, i) => {
+        const meta = chart.getDatasetMeta(i);
+        meta.data.forEach((bar, index) => {
+          const text = customLabels[index];
+          if (!text) return;
+
+          ctx.fillStyle = isLight ? '#D97706' : '#FBBF24';
+          ctx.font = `${isSingle ? '700 13px' : '600 10px'} ${state.lang === 'km' ? 'Kantumruy Pro' : 'Inter'}, sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          ctx.fillText(text, bar.x, bar.y - 4);
+        });
+      });
+      ctx.restore();
+    }
+  };
+
+  chartSurvival = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: state.lang === 'km' ? 'ថិរវេលាទ្រទ្រង់ប្រេង (ចំនួនថ្ងៃ)' : 'Fuel Autonomy Duration (Days)',
+          data: dataValues,
+          backgroundColor: barDefault,
+          borderRadius: 6,
+          maxBarThickness: isSingle ? 80 : 22,
+          categoryPercentage: isSingle ? 0.4 : 0.7,
+          barPercentage: isSingle ? 0.5 : 0.8
+        }
+      ]
+    },
+    plugins: [dataLabelsPlugin],
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const d = displayData[context.dataIndex];
+              const unit = state.lang === 'km' ? 'ថ្ងៃ' : 'Days';
+              if (d.oilReserveSpr.survivalDaysNoImport >= 365) {
+                return ` >365 ${unit} (${d.oilReserveSpr.survivalCategory})`;
+              }
+              return ` ${d.oilReserveSpr.survivalDaysNoImport} ${unit} (${d.oilReserveSpr.survivalCategory})`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: textColor, font: { size: isSingle ? 12 : 10, weight: '700', family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          grid: { display: false }
+        },
+        y: {
+          ticks: { color: textColor, font: { family: 'Inter' } },
+          grid: { color: gridColor },
+          title: { display: true, text: state.lang === 'km' ? 'ចំនួនថ្ងៃ (Days)' : 'Days of Autonomy', color: textColor, font: { size: 10, family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          max: isSingle ? Math.ceil(dataValues[0] * 1.35) : 200
+        }
+      }
+    }
+  });
+}
+
+// 3.6 Render Emergency Supply Shock & Cut-Off Simulator Output
+function renderEmergencySimulator() {
+  const container = document.getElementById('simulatorOutput');
+  if (!container) return;
+
+  const t = translations[state.lang];
+  const scenario = state.selectedScenario;
+
+  if (state.selectedCountryId === 'GLOBAL') {
+    let globalDays = 90;
+    let scenarioLabel = t.scenario100;
+    if (scenario === '50') {
+      globalDays = 180;
+      scenarioLabel = t.scenario50;
+    } else if (scenario === 'ration') {
+      globalDays = 112;
+      scenarioLabel = t.scenarioRation;
+    }
+
+    container.innerHTML = `
+      <div class="sim-metric-box">
+        <div class="sim-metric-left">
+          <span class="sim-metric-title">${t.labelSurvivalDays}</span>
+          <span class="sim-metric-value">~${globalDays} ${state.lang === 'km' ? 'ថ្ងៃ' : 'Days'}</span>
+          <span class="sim-metric-sub"><i class="fa-solid fa-earth-americas"></i> Global Average Buffer (${scenarioLabel})</span>
+        </div>
+        <span class="status-pill-safe">IEA Standard Compliant</span>
+      </div>
+
+      <div class="sim-details-list">
+        <div class="sim-detail-item">
+          <i class="fa-solid fa-shield-halved text-cyan" style="margin-top:2px;"></i>
+          <div><strong>${state.lang === 'km' ? 'ប្រទេសនាំចេញ (Exporters)' : 'Net Exporters'} (Saudi, Russia, UAE, Iran, Iraq, Kuwait, Venezuela):</strong> ${state.lang === 'km' ? 'ទ្រទ្រង់បានលើសពី ៣៦៥ ថ្ងៃ (ផលិតកម្មក្នុងស្រុកគ្រប់គ្រាន់)' : '>365 Days Autonomy (Domestic crude self-sufficient)'}</div>
+        </div>
+        <div class="sim-detail-item">
+          <i class="fa-solid fa-building-columns text-purple" style="margin-top:2px;"></i>
+          <div><strong>${state.lang === 'km' ? 'ប្រទេសនាំចូលធំៗ (Major Importers)' : 'Major Dual/Importers'}:</strong> USA (~120d SPR), China (~100d SPR), Canada (>180d Hubs), Brazil (~45d Buffer)</div>
+        </div>
+        <div class="sim-detail-item">
+          <i class="fa-solid fa-flag text-amber" style="margin-top:2px;"></i>
+          <div><strong>${t.cambodiaSpotlightTitle}:</strong> ${state.lang === 'km' ? 'កម្ពុជាមានស្តុកប្រេងអាសន្ន ~២១ ដល់ ៣០ ថ្ងៃ (ពឹងផ្អែកលើការនាំចូល ១០០%)' : 'Cambodia baseline survival is ~21-30 days commercial stock (100% import dependent)'}</div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  const c = petroleumData.find(item => item.id === state.selectedCountryId);
+  if (!c) return;
+
+  const baseDays = c.oilReserveSpr.survivalDaysNoImport;
+  let calcDays = baseDays;
+  let statusClass = 'status-pill-safe';
+  let statusText = c.oilReserveSpr.survivalCategory;
+
+  if (c.tradeStatus === 'Net Exporter' && baseDays >= 365) {
+    calcDays = '>365';
+    statusClass = 'status-pill-exporter';
+    statusText = state.lang === 'km' ? 'ស្វ័យគ្រប់គ្រង (Self-Sufficient Exporter)' : 'Self-Sufficient Net Exporter';
+  } else {
+    if (scenario === '50') {
+      calcDays = Math.round(baseDays * 2);
+    } else if (scenario === 'ration') {
+      calcDays = Math.round(baseDays * 1.25);
+    }
+
+    if (calcDays >= 90) {
+      statusClass = 'status-pill-safe';
+    } else if (calcDays >= 30) {
+      statusClass = 'status-pill-warning';
+    } else {
+      statusClass = 'status-pill-critical';
+    }
+  }
+
+  const daysDisplay = typeof calcDays === 'number' ? `~${calcDays} ${state.lang === 'km' ? 'ថ្ងៃ' : 'Days'}` : `${calcDays} ${state.lang === 'km' ? 'ថ្ងៃ' : 'Days'}`;
+
+  container.innerHTML = `
+    <div class="sim-metric-box">
+      <div class="sim-metric-left">
+        <span class="sim-metric-title">${t.labelSurvivalDays}</span>
+        <span class="sim-metric-value">${daysDisplay}</span>
+        <span class="sim-metric-sub"><i class="fa-solid fa-battery-half text-amber"></i> ${c.oilReserveSpr.survivalCategory}</span>
+      </div>
+      <span class="${statusClass}">${statusText}</span>
+    </div>
+
+    <div class="sim-details-list">
+      <div class="sim-detail-item">
+        <i class="fa-solid fa-gas-pump text-amber" style="margin-top:2px;"></i>
+        <div><strong>${t.labelDailyConsumption}:</strong> ${c.oilReserveSpr.dailyConsumptionBpd} | <strong>${t.labelImportReliance}:</strong> ${c.oilReserveSpr.netImportReliance}</div>
+      </div>
+      <div class="sim-detail-item">
+        <i class="fa-solid fa-shield-halved text-cyan" style="margin-top:2px;"></i>
+        <div><strong>${t.labelEmergencyNote}:</strong> ${c.oilReserveSpr.emergencyScenarioNote}</div>
+      </div>
+      <div class="sim-detail-item">
+        <i class="fa-solid fa-scale-balanced text-purple" style="margin-top:2px;"></i>
+        <div><strong>IEA Benchmark:</strong> 90 Days Target | <strong>Cambodia Baseline:</strong> 21-30 Days Commercial Requirement</div>
+      </div>
+    </div>
+  `;
 }
 
 // 4. Render Upstream Policy Scannable KPIs with Rich Icons & i18n
