@@ -81,7 +81,7 @@ function updateLangButton() {
 const countryListConfig = [
   { id: 'GLOBAL', flag: '🌐', rank: 'ALL', nameEn: 'All Countries (Global)', nameKm: 'ទិដ្ឋភាពទូទៅសកល' },
   { id: 'venezuela', flag: '🇻🇪', rank: '#1', nameEn: 'Venezuela', nameKm: 'វេណេស៊ុយអេឡា' },
-  { id: 'saudi-arabia', flag: '🇸🇦', rank: '#2', nameEn: 'Saudi Arabia', nameKm: 'អារ៉ាប៊ីសាអូឌីត' },
+  { id: 'saudi-arabia', flag: '🇸🇦', rank: '#2', nameEn: 'Saudi Arabia', nameKm: 'អារ៉ាប៊ីសាអ៊ូឌីត' },
   { id: 'iran', flag: '🇮🇷', rank: '#3', nameEn: 'Iran', nameKm: 'អ៊ីរ៉ង់' },
   { id: 'canada', flag: '🇨🇦', rank: '#4', nameEn: 'Canada', nameKm: 'កាណាដា' },
   { id: 'iraq', flag: '🇮🇶', rank: '#5', nameEn: 'Iraq', nameKm: 'អ៊ីរ៉ាក់' },
@@ -111,6 +111,16 @@ function initEvents() {
       window.print();
     });
   }
+
+  window.addEventListener('beforeprint', () => {
+    if (chartReserves) chartReserves.resize();
+    if (chartSurvival) chartSurvival.resize();
+    if (chartDonut) chartDonut.resize();
+  });
+
+  window.addEventListener('afterprint', () => {
+    renderAllViews();
+  });
 
   if (themeBtn) {
     themeBtn.addEventListener('click', toggleTheme);
@@ -374,7 +384,7 @@ function renderTopKpis() {
 function translateCountryName(name) {
   const map = {
     'Venezuela': 'វេណេស៊ុយអេឡា',
-    'Saudi Arabia': 'អារ៉ាប៊ីសាអូឌីត',
+    'Saudi Arabia': 'អារ៉ាប៊ីសាអ៊ូឌីត',
     'Iran': 'អ៊ីរ៉ង់',
     'Canada': 'កាណាដា',
     'Iraq': 'អ៊ីរ៉ាក់',
@@ -424,11 +434,11 @@ function renderChart() {
           const text = customLabels[index];
           if (!text) return;
 
-          ctx.fillStyle = isLight ? '#0F172A' : '#38BDF8';
-          ctx.font = `${isSingle ? '700 11px' : '600 8.5px'} ${state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter'}, sans-serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'bottom';
-          ctx.fillText(text, bar.x, bar.y - 2);
+          ctx.fillStyle = isLight ? '#0F172A' : '#F8FAFC';
+          ctx.font = `${isSingle ? '700 13.5px' : '600 11px'} ${state.lang === 'km' ? 'Noto Serif Khmer' : 'Inter'}, sans-serif`;
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(text, bar.x + 6, bar.y);
         });
       });
       ctx.restore();
@@ -455,7 +465,7 @@ function renderChart() {
       responsive: true,
       maintainAspectRatio: false,
       layout: {
-        padding: { top: 4, bottom: 4, left: 0, right: 35 }
+        padding: { top: 4, bottom: 4, left: 0, right: isSingle ? 140 : 85 }
       },
       plugins: {
         legend: { display: false },
@@ -470,13 +480,13 @@ function renderChart() {
       },
       scales: {
         x: {
-          ticks: { color: textColor, font: { size: 8.5, family: 'Inter' } },
+          ticks: { color: textColor, font: { size: 10.5, family: state.lang === 'km' ? 'Noto Serif Khmer' : 'Inter' } },
           grid: { color: gridColor },
-          title: { display: true, text: unitText, color: textColor, font: { size: 8.5, family: state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter' } },
+          title: { display: true, text: unitText, color: textColor, font: { size: 10.5, family: state.lang === 'km' ? 'Noto Serif Khmer' : 'Inter' } },
           max: isSingle ? Math.ceil(dataValues[0] * 1.35) : undefined
         },
         y: {
-          ticks: { color: textColor, font: { size: isSingle ? 10 : 8.5, weight: '700', family: state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter' } },
+          ticks: { color: textColor, font: { size: isSingle ? 12 : 10.5, weight: '700', family: state.lang === 'km' ? 'Noto Serif Khmer' : 'Inter' } },
           grid: { display: false }
         }
       }
@@ -543,11 +553,11 @@ function renderEmergencySurvivalChart() {
           const text = customLabels[index];
           if (!text) return;
 
-          ctx.fillStyle = isLight ? '#D97706' : '#FBBF24';
-          ctx.font = `${isSingle ? '700 11px' : '600 8.5px'} ${state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter'}, sans-serif`;
+          ctx.fillStyle = isLight ? '#0F172A' : '#F8FAFC';
+          ctx.font = `${isSingle ? '700 13.5px' : '600 11px'} ${state.lang === 'km' ? 'Noto Serif Khmer' : 'Inter'}, sans-serif`;
           ctx.textAlign = 'left';
           ctx.textBaseline = 'middle';
-          ctx.fillText(text, bar.x + 4, bar.y);
+          ctx.fillText(text, bar.x + 6, bar.y);
         });
       });
 
@@ -566,7 +576,7 @@ function renderEmergencySurvivalChart() {
 
         ctx.save();
         ctx.fillStyle = isLight ? '#EF4444' : '#F87171';
-        ctx.font = `600 9px ${state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter'}, sans-serif`;
+        ctx.font = `600 11px ${state.lang === 'km' ? 'Noto Serif Khmer' : 'Inter'}, sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
         ctx.fillText('IEA 90-Day', xPixel, chartArea.top - 2);
@@ -597,7 +607,7 @@ function renderEmergencySurvivalChart() {
       responsive: true,
       maintainAspectRatio: false,
       layout: {
-        padding: { top: 12, bottom: 4, left: 0, right: 45 }
+        padding: { top: 12, bottom: 4, left: 0, right: isSingle ? 140 : 85 }
       },
       plugins: {
         legend: { display: false },
@@ -613,13 +623,13 @@ function renderEmergencySurvivalChart() {
       },
       scales: {
         x: {
-          ticks: { color: textColor, font: { size: 8.5, family: 'Inter' } },
+          ticks: { color: textColor, font: { size: 10.5, family: state.lang === 'km' ? 'Noto Serif Khmer' : 'Inter' } },
           grid: { color: gridColor },
-          title: { display: true, text: state.lang === 'km' ? 'ចំនួនថ្ងៃ (Days)' : 'Days of Autonomy', color: textColor, font: { size: 8.5, family: state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter' } },
+          title: { display: true, text: state.lang === 'km' ? 'ចំនួនថ្ងៃ (Days)' : 'Days of Autonomy', color: textColor, font: { size: 10.5, family: state.lang === 'km' ? 'Noto Serif Khmer' : 'Inter' } },
           max: Math.max(200, isSingle ? Math.ceil(dataValues[0] * 1.2) : 200)
         },
         y: {
-          ticks: { color: textColor, font: { size: isSingle ? 10 : 8.5, weight: '700', family: state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter' } },
+          ticks: { color: textColor, font: { size: isSingle ? 12 : 10.5, weight: '700', family: state.lang === 'km' ? 'Noto Serif Khmer' : 'Inter' } },
           grid: { display: false }
         }
       }

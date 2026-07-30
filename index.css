@@ -1,5 +1,5 @@
 /* Executive Petroleum Dashboard Theme - English & Khmer (i18n) Support */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Khmer:wght@300;400;500;600;700;800&family=Kantumruy+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+Khmer:wght@300;400;500;600;700;800;900&family=Noto+Sans+Khmer:wght@300;400;500;600;700;800&family=Kantumruy+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root {
   /* Default Dark Mode Theme Tokens */
@@ -22,8 +22,8 @@
   --text-secondary: #94A3B8;
   --text-muted: #64748B;
   
-  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-family-title: 'Outfit', sans-serif;
+  --font-family-base: 'Noto Serif Khmer', 'Inter', -apple-system, BlinkMacSystemFont, serif, sans-serif;
+  --font-family-title: 'Noto Serif Khmer', 'Outfit', serif, sans-serif;
   
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -59,8 +59,9 @@
 
 /* Khmer Font Override Rule */
 [lang="km"] {
-  --font-family-base: 'Noto Sans Khmer', 'Kantumruy Pro', 'Inter', sans-serif;
-  --font-family-title: 'Noto Sans Khmer', 'Kantumruy Pro', 'Outfit', sans-serif;
+  --font-family-base: 'Noto Serif Khmer', 'Noto Sans Khmer', 'Kantumruy Pro', 'Inter', serif, sans-serif;
+  --font-family-title: 'Noto Serif Khmer', 'Noto Sans Khmer', 'Kantumruy Pro', 'Outfit', serif, sans-serif;
+  font-size: 105%;
 }
 
 * {
@@ -102,18 +103,16 @@ html {
 }
 
 html, body {
-  height: 100vh;
-  max-height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .dashboard-app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  max-height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* Top Navigation Bar */
@@ -184,10 +183,10 @@ html, body {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   color: var(--text-primary);
-  padding: 0.35rem 0.65rem;
+  padding: 0.38rem 0.7rem;
   border-radius: var(--radius-sm);
   font-family: var(--font-family-title);
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -223,10 +222,10 @@ html, body {
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-secondary);
-  padding: 0.35rem 0.75rem;
+  padding: 0.38rem 0.8rem;
   border-radius: var(--radius-sm);
   font-family: var(--font-family-title);
-  font-size: 0.8rem;
+  font-size: 0.92rem;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -285,10 +284,7 @@ html, body {
   display: flex;
   flex: 1;
   width: 100vw;
-  height: calc(100vh - 46px);
-  max-height: calc(100vh - 46px);
-  min-height: 0;
-  overflow: hidden;
+  min-height: calc(100vh - 46px);
 }
 
 /* Country Navigation Sidebar (Left Filter Panel) */
@@ -329,14 +325,14 @@ html, body {
 
 .sidebar-title {
   font-family: var(--font-family-title);
-  font-size: 0.88rem;
+  font-size: 1.02rem;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: 0.2px;
 }
 
 .sidebar-sub {
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   color: var(--text-muted);
   font-weight: 500;
 }
@@ -356,13 +352,13 @@ html, body {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  padding: 0.38rem 0.55rem;
+  padding: 0.45rem 0.65rem;
   border-radius: var(--radius-sm);
   background: var(--bg-sub);
   border: 1px solid var(--border-card);
   color: var(--text-primary);
   font-family: var(--font-family-base);
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   outline: none;
@@ -459,8 +455,6 @@ html, body {
   gap: 0.45rem;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 100%;
-  max-height: 100%;
   min-height: 0;
 }
 
@@ -471,7 +465,7 @@ html, body {
   flex-direction: column;
   gap: 0.45rem;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .tab-pane.active {
@@ -642,7 +636,7 @@ html, body {
 
 .banner-title {
   font-family: var(--font-family-title);
-  font-size: 0.92rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-primary);
   display: flex;
@@ -651,7 +645,7 @@ html, body {
 }
 
 .banner-subtitle {
-  font-size: 0.72rem;
+  font-size: 0.84rem;
   color: var(--text-secondary);
 }
 
@@ -661,9 +655,9 @@ html, body {
 }
 
 .kpi-pill {
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  padding: 0.2rem 0.5rem;
+  padding: 0.22rem 0.6rem;
   border-radius: 12px;
   display: inline-flex;
   align-items: center;
@@ -721,7 +715,7 @@ html, body {
 }
 
 .kpi-title {
-  font-size: 0.65rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--text-muted);
   letter-spacing: 0.3px;
@@ -731,7 +725,7 @@ html, body {
 }
 
 .kpi-icon {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 
 .card-cyan .kpi-icon { color: var(--accent-cyan); }
@@ -741,9 +735,10 @@ html, body {
 
 .kpi-value {
   font-family: var(--font-family-title);
-  font-size: 1.15rem;
+  font-size: 1.18rem;
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.25;
+  word-break: break-word;
 }
 
 .card-cyan .kpi-value { color: var(--accent-cyan); }
@@ -752,7 +747,7 @@ html, body {
 .card-amber .kpi-value { color: var(--accent-amber); }
 
 .kpi-foot {
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
@@ -768,7 +763,7 @@ html, body {
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
   flex: 1.1;
-  min-height: 380px; /* Increased to fix small charts */
+  min-height: 270px;
 }
 
 .content-card {
@@ -800,7 +795,7 @@ html, body {
 
 .card-head-title {
   font-family: var(--font-family-title);
-  font-size: 0.88rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--text-primary);
   display: flex;
@@ -809,7 +804,7 @@ html, body {
 }
 
 .card-head-sub {
-  font-size: 0.72rem;
+  font-size: 0.84rem;
   color: var(--text-muted);
   display: flex;
   align-items: center;
@@ -825,7 +820,7 @@ html, body {
 .chart-container {
   position: relative;
   width: 100%;
-  min-height: 280px; 
+  min-height: 220px; 
   flex: 1;
 }
 
@@ -835,7 +830,7 @@ html, body {
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
   flex: 1.25;
-  min-height: 250px;
+  min-height: 210px;
 }
 
 /* Scannable KPI Bullet Summary Lists */
@@ -864,7 +859,7 @@ html, body {
 }
 
 .kpi-item-label {
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.3px;
@@ -875,10 +870,10 @@ html, body {
 }
 
 .kpi-item-val {
-  font-size: 0.8rem;
+  font-size: 0.92rem;
   font-weight: 600;
   color: var(--text-primary);
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 /* Row 3: Emergency Analytics Grid & Scenario Simulator Styling */
@@ -974,7 +969,7 @@ html, body {
 }
 
 .sim-metric-value {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-family-title);
   font-size: 1.3rem;
   font-weight: 800;
   color: var(--accent-amber);
@@ -1117,25 +1112,86 @@ html, body {
 }
 
 /* Print / Export A4 Styles */
+/* Universal Print / Export PDF & Paper Styles (Supports A4, Letter, Legal, etc.) */
 @media print {
-  html, body, .dashboard-app {
-    height: auto !important;
-    overflow: visible !important;
+  @page {
+    size: auto;
+    margin: 8mm 10mm;
   }
-  .country-sidebar {
+
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html, body, .dashboard-app, .dashboard-body, .dashboard-viewport {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    width: 100% !important;
+    overflow: visible !important;
+    background: var(--bg-app) !important;
+    color: var(--text-primary) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .country-sidebar,
+  .country-nav,
+  .print-a4-btn,
+  .lang-toggle-btn,
+  .theme-toggle-btn,
+  .header-search {
     display: none !important;
   }
+
   .top-header {
+    position: relative !important;
+    top: 0 !important;
+    border-bottom: 2px solid var(--border-card) !important;
+    padding: 0.3rem 0.5rem !important;
+    height: auto !important;
+    min-height: 0 !important;
     box-shadow: none !important;
+    margin-bottom: 0.5rem !important;
+    background: var(--bg-header) !important;
   }
-  .dashboard-body {
+
+  .dashboard-content-scroll {
     overflow: visible !important;
-    height: auto !important;
-  }
-  .dashboard-viewport {
-    overflow: visible !important;
+    gap: 0.6rem !important;
     padding: 0 !important;
+  }
+
+  /* Prevent awkward page cuts inside cards, charts, and grids */
+  .kpi-card,
+  .content-card,
+  .sim-metric-box,
+  .tag-matrix-card,
+  .scenario-card,
+  .view-banner,
+  .kpi-cards-grid,
+  .charts-row-grid,
+  .simulator-spotlight-grid,
+  .policy-taxonomy-grid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .charts-row-grid,
+  .policy-sim-grid {
+    min-height: 240px !important;
+  }
+
+  .chart-container {
+    min-height: 200px !important;
     height: auto !important;
+  }
+
+  canvas {
+    max-width: 100% !important;
   }
 }
 
