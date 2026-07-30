@@ -311,7 +311,7 @@ function renderBanner() {
       if (titleElem) titleElem.innerHTML = `<i class="fa-solid fa-flag text-cyan"></i> ${countryNameDisplay} ${t.profileTitleSuffix}`;
       if (subtitleElem) subtitleElem.textContent = `${t.provenRankPrefix}${country.rank} | ${t.tradeStatusLabel}${country.tradeStatus}`;
       if (badgesElem) {
-        const tradeClass = country.tradeStatus === 'Net Exporter' ? 'pill-green' : 'pill-cyan';
+        const tradeClass = country.tradeStatus.includes('Exporter') ? 'pill-green' : 'pill-cyan';
         badgesElem.innerHTML = `
           <span class="kpi-pill ${tradeClass}"><i class="fa-solid fa-arrow-right-arrow-left"></i> ${country.tradeStatus}</span>
           <span class="kpi-pill pill-purple"><i class="fa-solid fa-trophy"></i> Rank #${country.rank}</span>
@@ -339,7 +339,7 @@ function renderTopKpis() {
   const elFootSpr = document.getElementById('kpiFootSpr');
 
   if (state.selectedCountryId === 'GLOBAL') {
-    if (elValReserves) elValReserves.textContent = state.lang === 'km' ? '~១.៧៧ ត្រីលានបារ៉ែល' : '~1.77 T bbls';
+    if (elValReserves) elValReserves.textContent = t.kpiReservesValGlobal;
     if (elFootReserves) elFootReserves.innerHTML = `<i class="fa-solid fa-chart-simple"></i> ${t.kpiReservesFootGlobal}`;
 
     if (elValOwnership) elValOwnership.textContent = t.kpiOwnershipValGlobal;
@@ -356,7 +356,7 @@ function renderTopKpis() {
   const c = petroleumData.find(item => item.id === state.selectedCountryId);
   if (!c) return;
 
-  const reservesUnit = state.lang === 'km' ? 'ពានលានបារ៉ែល' : 'B bbls';
+  const reservesUnit = state.lang === 'km' ? 'ពាន់លានបារ៉ែល' : 'B bbls';
   if (elValReserves) elValReserves.textContent = `${c.oilReserveSpr.provenReservesNumeric} ${reservesUnit}`;
   if (elFootReserves) elFootReserves.innerHTML = `<i class="fa-solid fa-trophy"></i> ${t.provenRankPrefix}${c.rank}`;
 
@@ -397,7 +397,7 @@ function renderChart() {
   const gridColor = isLight ? '#E2E8F0' : '#334155';
   const textColor = isLight ? '#64748B' : '#94A3B8';
   const barDefault = isLight ? '#0284C7' : '#38BDF8';
-  const unitText = state.lang === 'km' ? 'ពានលានបារ៉ែល' : 'B bbls';
+  const unitText = state.lang === 'km' ? 'ពាន់លានបារ៉ែល' : 'B bbls';
 
   // Flexible Filter: All Countries vs Single Country
   let displayData = [...petroleumData].sort((a, b) => a.rank - b.rank);
@@ -425,7 +425,7 @@ function renderChart() {
           if (!text) return;
 
           ctx.fillStyle = isLight ? '#0F172A' : '#38BDF8';
-          ctx.font = `${isSingle ? '700 11px' : '600 8.5px'} ${state.lang === 'km' ? 'Kantumruy Pro' : 'Inter'}, sans-serif`;
+          ctx.font = `${isSingle ? '700 11px' : '600 8.5px'} ${state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter'}, sans-serif`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
           ctx.fillText(text, bar.x, bar.y - 2);
@@ -472,11 +472,11 @@ function renderChart() {
         x: {
           ticks: { color: textColor, font: { size: 8.5, family: 'Inter' } },
           grid: { color: gridColor },
-          title: { display: true, text: unitText, color: textColor, font: { size: 8.5, family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          title: { display: true, text: unitText, color: textColor, font: { size: 8.5, family: state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter' } },
           max: isSingle ? Math.ceil(dataValues[0] * 1.35) : undefined
         },
         y: {
-          ticks: { color: textColor, font: { size: isSingle ? 10 : 8.5, weight: '700', family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          ticks: { color: textColor, font: { size: isSingle ? 10 : 8.5, weight: '700', family: state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter' } },
           grid: { display: false }
         }
       }
@@ -544,7 +544,7 @@ function renderEmergencySurvivalChart() {
           if (!text) return;
 
           ctx.fillStyle = isLight ? '#D97706' : '#FBBF24';
-          ctx.font = `${isSingle ? '700 11px' : '600 8.5px'} ${state.lang === 'km' ? 'Kantumruy Pro' : 'Inter'}, sans-serif`;
+          ctx.font = `${isSingle ? '700 11px' : '600 8.5px'} ${state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter'}, sans-serif`;
           ctx.textAlign = 'left';
           ctx.textBaseline = 'middle';
           ctx.fillText(text, bar.x + 4, bar.y);
@@ -566,7 +566,7 @@ function renderEmergencySurvivalChart() {
 
         ctx.save();
         ctx.fillStyle = isLight ? '#EF4444' : '#F87171';
-        ctx.font = `600 9px ${state.lang === 'km' ? 'Kantumruy Pro' : 'Inter'}, sans-serif`;
+        ctx.font = `600 9px ${state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter'}, sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
         ctx.fillText('IEA 90-Day', xPixel, chartArea.top - 2);
@@ -597,7 +597,7 @@ function renderEmergencySurvivalChart() {
       responsive: true,
       maintainAspectRatio: false,
       layout: {
-        padding: { top: 12, bottom: 4, left: 0, right: 35 }
+        padding: { top: 12, bottom: 4, left: 0, right: 45 }
       },
       plugins: {
         legend: { display: false },
@@ -615,11 +615,11 @@ function renderEmergencySurvivalChart() {
         x: {
           ticks: { color: textColor, font: { size: 8.5, family: 'Inter' } },
           grid: { color: gridColor },
-          title: { display: true, text: state.lang === 'km' ? 'ចំនួនថ្ងៃ (Days)' : 'Days of Autonomy', color: textColor, font: { size: 8.5, family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          title: { display: true, text: state.lang === 'km' ? 'ចំនួនថ្ងៃ (Days)' : 'Days of Autonomy', color: textColor, font: { size: 8.5, family: state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter' } },
           max: Math.max(200, isSingle ? Math.ceil(dataValues[0] * 1.2) : 200)
         },
         y: {
-          ticks: { color: textColor, font: { size: isSingle ? 10 : 8.5, weight: '700', family: state.lang === 'km' ? 'Kantumruy Pro' : 'Inter' } },
+          ticks: { color: textColor, font: { size: isSingle ? 10 : 8.5, weight: '700', family: state.lang === 'km' ? 'Noto Sans Khmer' : 'Inter' } },
           grid: { display: false }
         }
       }

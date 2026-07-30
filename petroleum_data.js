@@ -111,7 +111,7 @@ export const petroleumData = [
     riskManagement: {
       hseCompliance: "Strict internal Aramco environmental & safety standards; zero routine flaring target by 2030.",
       financialRiskRevenueStabilization: "OPEC+ production quota leadership stabilizes global Brent crude price; Public Investment Fund (PIF) diversifies national wealth.",
-      geopoliticalLocalContent: "East-West Pipeline mitigates Strait of Hormuz blockade risk; iktva program mandates >70% local content procurement.",
+      geopoliticalLocalContent: "East-West Pipeline mitigates Strait of Hormuz blockade risk; IKTVA program mandates >70% local content procurement.",
       climateEnergyTransition: "Major investments in CCUS (Carbon Capture), green hydrogen, and solar power integration at extraction fields."
     },
 
@@ -187,7 +187,7 @@ export const petroleumData = [
     id: "canada",
     country: "Canada",
     rank: 4,
-    tradeStatus: "Both",
+    tradeStatus: "Two-Way Trader / Net Exporter",
 
     // 1. Oil Reserve Ranking & SPR
     oilReserveSpr: {
@@ -198,7 +198,7 @@ export const petroleumData = [
       licensingModel: "Open Concession (Provincial Crown Auctions)",
       stockDuration: ">90 days demand satisfied via commercial private storage hubs in Alberta & Saskatchewan.",
       survivalDaysNoImport: 180,
-      survivalCategory: "High Buffer (>180 Days)",
+      survivalCategory: "Net Exporter (>180 Days)",
       dailyConsumptionBpd: "~2.4 Million bpd",
       netImportReliance: "0% Net Import Reliance (Net Exporter overall)",
       emergencyScenarioNote: "Western oil sands output & private commercial tank farm hubs in Alberta satisfy >180 days of domestic fuel demand.",
@@ -492,13 +492,13 @@ export const petroleumData = [
     id: "united-states",
     country: "United States",
     rank: 11,
-    tradeStatus: "Both",
+    tradeStatus: "Two-Way Trader / Net Exporter",
 
     // 1. Oil Reserve Ranking & SPR
     oilReserveSpr: {
       provenReserves: "~47 Billion bbls (Rank #11)",
       provenReservesNumeric: 47,
-      sprCapacity: "~411-415 Million bbls (Capacity ~714M bbls)",
+      sprCapacity: "~411-415 Million bbls (Capacity ~714 Million bbls)",
       ownershipModel: "Mixed Federal, State, and Private mineral rights ownership",
       licensingModel: "Open Concession (Competitive Lease Sales)",
       stockDuration: "~90+ days import protection buffer managed by Department of Energy (DOE)",
@@ -521,7 +521,7 @@ export const petroleumData = [
     // 3. Downstream Policy
     downstreamPolicy: {
       refiningPipelineInfra: "Largest refining capacity globally (Gulf Coast hubs) linked via Colonial & Enbridge pipeline networks.",
-      retailPricingSubsidy: "100% free-market liberalized retail pricing determined by market competition without state subsidies.",
+      retailPricingSubsidy: "Free-market liberalized retail pricing determined by market competition without state subsidies.",
       fuelQualityEnvStandards: "Strict EPA Clean Air Act Tier 3 gasoline sulfur limits & Renewable Fuel Standard (RFS) ethanol blending mandates."
     },
 
@@ -553,7 +553,7 @@ export const petroleumData = [
     id: "china",
     country: "China",
     rank: 13,
-    tradeStatus: "Both",
+    tradeStatus: "Net Importer",
 
     // 1. Oil Reserve Ranking & SPR
     oilReserveSpr: {
@@ -614,7 +614,7 @@ export const petroleumData = [
     id: "brazil",
     country: "Brazil",
     rank: 15,
-    tradeStatus: "Both",
+    tradeStatus: "Two-Way Trader / Net Exporter",
 
     // 1. Oil Reserve Ranking & SPR
     oilReserveSpr: {
@@ -661,7 +661,7 @@ export const petroleumData = [
       hseCompliance: "IBAMA stringent environmental licensing for deepwater drilling & Santos basin FPSOs.",
       financialRiskRevenueStabilization: "State intervention in Petrobras wholesale pricing & profit oil monetization via PPSA.",
       geopoliticalLocalContent: "ANP local content requirements for subsea equipment & FPSO hull construction.",
-      climateEnergyTransition: "Different fiscal regimes may be appropriate for conventional and strategically important petroleum resources."
+      climateEnergyTransition: "Offshore FPSO electrification, subsea CCUS deployment, and expanded biofuel blending integration under RenovaBio."
     },
 
     transferabilityToCambodia: "Different fiscal regimes may be appropriate for conventional and strategically important petroleum resources.",
